@@ -1,0 +1,14 @@
+<?php
+
+# Settings
+$settings = array (
+	'hostname' => 'localhost',
+	'username' => 'the_username',
+	'password' => 'the_password',
+);
+
+# Load and instantiate the SPRI shop application
+require_once ('spri-shop/sprishop.php');
+new sprishop ($settings);
+
+?>
