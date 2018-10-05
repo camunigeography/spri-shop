@@ -962,7 +962,7 @@ class sprishop extends frontControllerApplication
 				$query = "
 					SELECT
 						{$type}.id, {$type}.pricePerUnit, {$type}.priceIncludesVat, {$type}.stockAvailable, {$type}.stockIdealLevel, {$type}.stockMinimumLevel, {$type}.visible,
-						_clothingTypes.title title, _clothingTypes.*,
+						_clothingTypes.title AS title, _clothingTypes.photographFilename, _clothingTypes.description, _clothingTypes.descriptionLong,
 						_colours.hexCode hexCode, _colours.commonName colour,
 						_sizes.name size,
 						_materials.name material
