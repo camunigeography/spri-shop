@@ -319,6 +319,7 @@ class sprishop extends frontControllerApplication
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
 			  `subtypeName` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of book subtype',
 			  `subtypeUrlSlug` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'URL key for this subtype',
+			  `featured__JOIN__sprishop__books__reserved` int(11) NOT NULL COMMENT 'Featured item',
 			  UNIQUE KEY `subtypeUrlSlug` (`subtypeUrlSlug`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Book subtypes';
 			
@@ -544,7 +545,14 @@ class sprishop extends frontControllerApplication
 		}
 		
 		# Get the subtypes for this table
-		$data = $this->databaseConnection->select ($this->settings['database'], $table);
+		$query = "SELECT
+			{$table}.*,
+			photographFilename
+			FROM `{$this->settings['database']}`.`{$table}`
+			LEFT JOIN {$type} ON featured__JOIN__{$this->settings['database']}__{$type}__reserved = {$type}.id
+			ORDER BY subtypeName
+		;";
+		$data = $this->databaseConnection->getData ($query, "{$this->settings['database']}.{$table}");
 		
 		# Rekey by groupingUrlSlug; unfortunately the ID is also required so we couldn't use getPairs
 		$subtypes = array ();
@@ -706,8 +714,8 @@ class sprishop extends frontControllerApplication
 			
 			# If no grouping is requested, show the list available
 			if (!isSet ($_GET['grouping'])) {
-				$html .= "\n<p>Please select a grouping:</p>";
-				$html .= $this->subtypesTabs (false, 'boxylist');
+				$html .= "\n<p>Please choose a category:</p>";
+				$html .= $this->subtypesTabs (false, 'sublist', $this->arguments['type']);
 				echo $html;
 				return;
 			}
@@ -812,12 +820,13 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to add grouping tabs
-	private function subtypesTabs ($selected = false, $cssClass = 'tabsflat small')
+	private function subtypesTabs ($selected = false, $cssClass = 'tabsflat small', $includeImagesType = false)
 	{
 		# Create the tabs
 		$tabs = array ();
 		foreach ($this->subtypes as $key => $grouping) {
-			$tabs[$key] = "<a href=\"{$this->baseUrl}/{$this->arguments['type']}/{$key}.html\">" . htmlspecialchars ($grouping['subtypeName']) . '</a>';
+			$imageHtml = ($includeImagesType ? '<span>' . $this->imageHtml ($grouping['photographFilename'], 'Title', $includeImagesType) . '</span> ' : false);
+			$tabs[$key] = "<a href=\"{$this->baseUrl}/{$this->arguments['type']}/{$key}.html\">{$imageHtml}" . htmlspecialchars ($grouping['subtypeName']) . '</a>';
 		}
 		
 		# Compile the HTML

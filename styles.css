@@ -9,6 +9,12 @@
 #sprishop .categories li a {color: #009; font-weight: bold; display: block;}
 #sprishop .categories li a:hover {text-decoration: none;}
 
+/* Sublists */
+#sprishop ul.sublist {margin-left: 0; padding-left: 0;}
+#sprishop ul.sublist li {max-width: 230px; list-style-type: none; border: 1px solid #ccc; background-color: #f1f1f1; width: 50%; margin: 0 1.4em 1.4em 0; float: left; border-bottom-right-radius: 10px;}
+#sprishop ul.sublist li a {display: block; padding: 8px}
+#sprishop ul.sublist li span img {max-width: 55px; max-height: 70px; margin-right: 10px; border: 0;}
+
 /* Listing page */
 #sprishop .item {overflow: auto; border: 1px solid #d7d7d7; box-shadow: 5px 5px 10px #aaa; margin-bottom: 20px; padding: 20px 30px 20px 25px;}
 #sprishop .item:hover {background-color: #fcfcfc;}
