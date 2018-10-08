@@ -31,6 +31,7 @@ class sprishop extends frontControllerApplication
 			'imageGenerationStub'	=> '/images/generator',
 			'showPublisherLinks'	=> true,
 			'imageResizeTo'			=> 200,
+			'tabUlClass'			=> 'tabsflat',
 		);
 		
 		# Return the defaults
@@ -811,7 +812,7 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to add grouping tabs
-	private function subtypesTabs ($selected = false, $cssClass = 'tabs small')
+	private function subtypesTabs ($selected = false, $cssClass = 'tabsflat small')
 	{
 		# Create the tabs
 		$tabs = array ();
