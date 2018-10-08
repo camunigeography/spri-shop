@@ -767,8 +767,9 @@ class sprishop extends frontControllerApplication
 			}
 			
 			# Reorganise some of the item components (irrespective of whether they become multiselect)
+			#!# These should be moved back towards a fuller model
 			foreach ($data as &$item) {
-				$item = $this->compileItemComponents ($item, $type);
+				$item = $this->compileItemComponents ($item, $type, $grouping);
 			}
 			
 			# Perform grouping by title
@@ -1080,7 +1081,7 @@ class sprishop extends frontControllerApplication
 	private function itemHtml ($item, $type, $full = false)
 	{
 		# Adjust the multiselect components box
-		$multiselectComponents = $this->compileMultiselectComponents ($item);
+		$multiselectComponents = $this->compileMultiselectComponents ($item, $labels /* returned by reference */);
 		
 		# Determine whether there can be a link to more information
 		$moreInfo = (!$multiselectComponents && !$full && $item['descriptionLong']);
@@ -1130,15 +1131,15 @@ class sprishop extends frontControllerApplication
 		$html  = "\n<div class=\"item\" id=\"item{$itemId}\">";
 		if ($this->userIsAdministrator && isSet ($item['admin']) && !$multiselectComponents) {$html .= $item['admin'];}
 		$html .= "\n\t<h2>" . ($moreInfo ? $link['start'] . $item['title'] . $link['end'] : $item['title']) . '</h2>';
-		if (!is_array ($item['photographFilename'])) {$html .= "\n\t" . $item['photographFilename'];}
+		if (!is_array ($item['photographHtml'])) {$html .= "\n\t" . $item['photographHtml'];}
 		$html .= "\n\t<div class=\"info\">";
 		if (isSet ($item['_author'])) {$html .= "\n\t\t<h4>By " . $item['_author'] . '</h4>';}
 		$html .= "\n\t\t" . application::formatTextBlock (application::makeClickableLinks ((($full && $item['descriptionLong']) ? (is_array ($item['descriptionLong']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['descriptionLong']) : (is_array ($item['description']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['description'])), false, false, $target = false), $paragraphClass = 'description');
 		$html .= $attributesHtml;
 		if (isSet ($item['publisherCompiled']) && ($item['publisherCompiled'])) {$html .= "\n\t\t<p class=\"publisher\">Published: " . (is_array ($item['publisherCompiled']) ? 'See options below' : "{$item['publisherCompiled']}") . '</p>';}
-		$html .= "\n\t\t<p class=\"price\">Price: " . (is_array ($item['pricePerUnit']) ? 'See options below' : "{$item['pricePerUnit']}") . '</p>';
-		$html .= "\n\t\t<p class=\"stock\">Availability: " . (is_array ($item['stockAvailable']) ? 'See options below' : $item['stockAvailable']) . '</p>';
-		if ($multiselectComponents) {$html .= "\n<p>Variations available:<br />" . application::htmlTable ($multiselectComponents, array (), 'lines small compressed', false, true, true) . '</p>';}
+		$html .= "\n\t\t<p class=\"price\">Price: " . (is_array ($item['pricePerUnit']) ? 'See options below' : "{$item['pricePerUnitFormatted']}") . '</p>';
+		$html .= "\n\t\t<p class=\"stock\">Availability: " . (is_array ($item['stockAvailable']) ? 'See options below' : $item['stockAvailableStatus']) . '</p>';
+		if ($multiselectComponents) {$html .= "\n<p>Variations available:<br />" . application::htmlTable ($multiselectComponents, $labels, 'lines small compressed', false, true, true) . '</p>';}
 		# Add a button to the longer description if there is one and not in single-item mode
 		if ($moreInfo) {$html .= "\n\t\t" . "<p class=\"moreinfo\">{$link['start']}More information ..{$link['end']}</p>";}
 		$html .= "\n\t</div>";
@@ -1150,9 +1151,14 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to adjust item component presentation
-	private function compileItemComponents ($item, $type)
+	private function compileItemComponents ($item, $type, $grouping)
 	{
+		# Add the item path
+		$item['path'] = '/' . $type . '/' . $item['id'] . '/';
+		$item['fragment'] = '/' . $type . '/' . ($grouping ? "{$grouping}.html" : '') . '#item' . $item['id'];
+		
 		# Determine whether stock is available
+		$item['stockAvailableNumeric'] = $item['stockAvailable'];
 		$item['stockAvailable'] = ($item['stockAvailable'] ? 'In stock' : 'We regret this item is temporarily <strong>out of stock</strong>');
 		
 		# Construct the author's details where relevant
@@ -1165,10 +1171,10 @@ class sprishop extends frontControllerApplication
 		}
 		
 		# Combine the VAT indicator into the price
-		$item['pricePerUnit'] = '&pound;' . $item['pricePerUnit'];
+		$item['pricePerUnitFormatted'] = $item['pricePerUnit'];
 		if (array_key_exists ('priceIncludesVat', $item)) {
 			if ($item['priceIncludesVat'] == 'N') {
-				$item['pricePerUnit'] .= '<span class="vat"> (VAT not chargeable)</span>';
+				$item['pricePerUnitFormatted'] .= ' &nbsp;<span class="vat">(VAT not chargeable)</span>';
 			}
 			unset ($item['priceIncludesVat']);
 		}
@@ -1184,8 +1190,8 @@ class sprishop extends frontControllerApplication
 			$item['colour'] = '';
 		}
 		
-		# Convert the photograph filename to a photograph
-		$item['photographFilename'] = $this->imageHtml ($item['photographFilename'], $item['title'], $type);
+		# Convert the photograph filename to a photograph, and get the photograph path
+		$item['photographFilename'] = $this->imageHtml ($item['photographFilename'], $item['title'], $type, $item['photographPath']);
 		
 		# Convert publisher and publication date
 		$item['publisherCompiled'] = (isSet ($item['publicationDate']) ? ((strpos ($item['publicationDate'], '-') !== false) ? timedate::formatDate ($item['publicationDate']) : $item['publicationDate']) . ' by ' : '') . (isSet ($item['publisherName']) ? (($this->settings['showPublisherLinks'] && $item['publisherUrl']) ? '<a' . (substr_count ($item['publisherUrl'], $_SERVER['SERVER_NAME']) ? '' : ' target="_blank"') . " href=\"{$item['publisherUrl']}\">{$item['publisherName']}</a>" : $item['publisherName']) : '');
@@ -1217,8 +1223,15 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to adjust the multiselect box
-	private function compileMultiselectComponents ($item)
+	private function compileMultiselectComponents ($item, &$labels)
 	{
+		# Remove temporary variables
+		unset ($item['path']);
+		unset ($item['fragment']);
+		unset ($item['pricePerUnitFormatted']);
+		unset ($item['photographPath']);
+		unset ($item['stockAvailableNumeric']);
+		
 		# Obtain multiselect column names
 		$multiselectColumnNames = $this->multiselectColumnNames ($item);
 		
@@ -1268,13 +1281,16 @@ class sprishop extends frontControllerApplication
 			}
 		}
 		
+		# Set labels
+		$labels = array ();
+		
 		# Return
 		return $multiselectComponents;
 	}
 	
 	
 	# Function to create HTML for the image
-	private function imageHtml ($photographFilename, $title, $type)
+	private function imageHtml ($photographFilename, $title, $type, &$imagePath = false)
 	{
 		# Load required library
 		require_once ('image.php');
@@ -1287,20 +1303,21 @@ class sprishop extends frontControllerApplication
 			
 			#!# Remove this switching code when all data migrated
 			if ($type == 'clothing') {$type = '_clothingTypes';}
-			$imageFile = $this->settings['imageStoreRoot'] . '/' . $type . '/' . $photographFilename;
-			if (is_readable ($_SERVER['DOCUMENT_ROOT'] . $imageFile)) {
+			$imagePath = $this->settings['imageStoreRoot'] . '/' . $type . '/' . $photographFilename;
+			if (is_readable ($_SERVER['DOCUMENT_ROOT'] . $imagePath)) {
 				
 				# Determine the base size to scale to
 				$baseSize = $this->settings['imageResizeTo'];
 				
 				# Get its original size
-				list ($width, $height, $imageType, $imageAttributes) = getimagesize ($_SERVER['DOCUMENT_ROOT'] . $imageFile);
+				list ($width, $height, $imageType, $imageAttributes) = getimagesize ($_SERVER['DOCUMENT_ROOT'] . $imagePath);
 				
 				# Obtain the image height and width when scaled
 				list ($width, $height) = image::scaledImageDimensions ($width, $height, $baseSize);
 				
 				# Create the HTML
-				$imageHtml = '<img class="mainimage" src="' . ($this->settings['imageGenerationStub'] ? "{$this->settings['imageGenerationStub']}?{$width}," : '') . "{$imageFile}\" alt=\"{$title}\" width=\"{$width}\" height=\"{$height}\" />";
+				$thumbnailImagePath = ($this->settings['imageGenerationStub'] ? "{$this->settings['imageGenerationStub']}?{$width}," : '') . $imagePath;
+				$imageHtml = '<img class="mainimage" src="' . $thumbnailImagePath . "\" alt=\"{$title}\" width=\"{$width}\" height=\"{$height}\" />";
 			}
 		}
 		
