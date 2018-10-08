@@ -16,26 +16,26 @@
 #sprishop ul.sublist li span img {max-width: 55px; max-height: 70px; margin-right: 10px; border: 0;}
 
 /* Listing page */
-#sprishop .item {overflow: auto; border: 1px solid #d7d7d7; box-shadow: 5px 5px 10px #aaa; margin-bottom: 20px; padding: 20px 30px 20px 25px;}
-#sprishop .item:hover {background-color: #fcfcfc;}
-#sprishop .item h2 {padding: 5px 0; font-size: 1.4em; border-bottom: 0; margin: 0;}
-#sprishop .item h2 a {padding: 5px 0; border: 1px solid white; display: block;}
-#sprishop .item h2 a:hover {border-bottom-color: gray; border-right-color: gray; background-color: #f7f7f7; text-decoration: none;}
-#sprishop .item img.mainimage, #sprishop span.noimage {border: 1px solid #ccc; background-color: white; margin: 5px 0 10px 15px; float: right;}
+#sprishop div.item {overflow: auto; border: 1px solid #d7d7d7; box-shadow: 5px 5px 10px #aaa; margin-bottom: 20px; padding: 20px 30px 20px 25px;}
+#sprishop div.item:hover {background-color: #fcfcfc;}
+#sprishop div.item h2 {padding: 5px 0; font-size: 1.4em; border-bottom: 0; margin: 0;}
+#sprishop div.item h2 a {padding: 5px 0; border: 1px solid white; display: block;}
+#sprishop div.item h2 a:hover {border-bottom-color: gray; border-right-color: gray; background-color: #f7f7f7; text-decoration: none;}
+#sprishop div.item img.mainimage, #sprishop span.noimage {border: 1px solid #ccc; background-color: white; margin: 5px 0 10px 15px; float: right;}
 #sprishop span.noimage {height: 100px;}
 #sprishop span.noimage {width: 95px; padding: 13px; font-style: italic; border: 1px dashed #ccc;}
 #sprishop span.noimage, #sprishop span.noimage a {color: #bbb;}
 #sprishop span.noimage a:hover {text-decoration: none;}
 #sprishop ul.types li {font-weight: bold;}
-#sprishop .item p.author {line-height: 1em; font-style: italic; margin: 0 0 2px 0;}
-#sprishop .item p.moreinfo {float: right; margin: 0;}
-#sprishop .item p.moreinfo a {width: 125px; color: black; display: block; text-decoration: none; border: solid 1px #ddd; background-color: #fff; padding: 3px 6px;}
-#sprishop .item p.moreinfo a:hover {border-color: #6100c1; background-color: #f0e1ff;}
-#sprishop .item p.publisher, #sprishop .item p.price, #sprishop .item p.stock {color: gray; margin: 2px 0;}
-#sprishop .item p.publisher a, #sprishop .item p.price a, #sprishop .item p.stock a {color: gray; border-bottom: 1px solid #eee;}
-#sprishop .item p.publisher a:hover, #sprishop .item p.price a:hover, #sprishop .item p.stock a:hover {text-decoration: none;}
-#sprishop .item p.price {font-weight: bold; color: #333;}
-#sprishop .item span.vat {font-weight: normal; color: #bbb;}
+#sprishop div.item p.author {line-height: 1em; font-style: italic; margin: 0 0 2px 0;}
+#sprishop div.item p.moreinfo {float: right; margin: 0;}
+#sprishop div.item p.moreinfo a {width: 125px; color: black; display: block; text-decoration: none; border: solid 1px #ddd; background-color: #fff; padding: 3px 6px;}
+#sprishop div.item p.moreinfo a:hover {border-color: #6100c1; background-color: #f0e1ff;}
+#sprishop div.item p.publisher, #sprishop div.item p.price, #sprishop div.item p.stock {color: gray; margin: 2px 0;}
+#sprishop div.item p.publisher a, #sprishop div.item p.price a, #sprishop div.item p.stock a {color: gray; border-bottom: 1px solid #eee;}
+#sprishop div.item p.publisher a:hover, #sprishop div.item p.price a:hover, #sprishop div.item p.stock a:hover {text-decoration: none;}
+#sprishop div.item p.price {font-weight: bold; color: #333;}
+#sprishop div.item span.vat {font-weight: normal; color: #bbb;}
 #sprishop #parameters {border-top: 0px solid #f7f7f7; margin: 0 0 25px; padding: 2px 0;}
 
 /* Pagination and order-by box */
