@@ -32,6 +32,7 @@ class sprishop extends frontControllerApplication
 			'showPublisherLinks'	=> true,
 			'imageResizeTo'			=> 200,
 			'tabUlClass'			=> 'tabsflat',
+			'enableShoppingCart'	=> false,
 		);
 		
 		# Return the defaults
@@ -62,6 +63,27 @@ class sprishop extends frontControllerApplication
 				'url' => '%1/',
 				'usetab' => 'home',
 				'droplist' => true,
+			),
+			'basket' => array (
+				'description' => 'Basket',
+				'tab' => 'Basket',
+				'icon' => 'basket',
+				'url' => 'basket/',
+				'enableIf' => $this->settings['enableShoppingCart'],
+			),
+			'checkout' => array (
+				'description' => 'Checkout',
+				'usetab' => 'basket',
+				'url' => 'checkout/',
+				'enableIf' => $this->settings['enableShoppingCart'],
+			),
+			'review' => array (
+				'description' => false,
+				'tab' => 'Review',
+				'icon' => 'wand',
+				'url' => 'review/',
+				'administrator' => true,
+				'enableIf' => $this->settings['enableShoppingCart'],
 			),
 		);
 		
@@ -410,6 +432,38 @@ class sprishop extends frontControllerApplication
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Variation headings';
 		;";
 		
+		if ($this->settings['enableShoppingCart']) {
+			$sql .= "
+				CREATE TABLE `shoppingcart` (
+				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
+				  `session` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'User session number',
+				  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Shop product provider',
+				  `item` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Item number',
+				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp',
+				  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'URL of item',
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of item',
+				  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Image of item',
+				  `price` float(8,2) NOT NULL COMMENT 'Price each',
+				  `total` int(11) NOT NULL COMMENT 'Number of items required',
+				  `maximumAvailable` int(11) NOT NULL COMMENT 'Maxmimum number of items of this type available',
+				  `orderId` int(11) DEFAULT NULL COMMENT 'Order number'
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Shopping cart session information (do not edit)';
+				
+				CREATE TABLE `shoppingcartOrders` (
+				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Order no.',
+				  `collectionDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Collection details',
+				  `comments` text COLLATE utf8_unicode_ci COMMENT 'Any other comments',
+				  `sundries` text COLLATE utf8_unicode_ci COMMENT 'Sundries (if any)',
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name',
+				  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address',
+				  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail address',
+				  `telephone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Telephone',
+				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				  `status` enum('unfinalised','finalised','shipped','returned','lost','ignore') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Status of order'
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Shopping cart inquiry form';
+			;";
+		}
+  		
 		# Return the SQL
 		return $sql;
 	}
@@ -457,6 +511,23 @@ class sprishop extends frontControllerApplication
 		if ($this->action != 'settings') {	// Except on the settings page itself
 			$this->settings['feedbackRecipient'] = array ($this->settings['feedbackRecipient'], $this->settings['administratorEmail']);
 		}
+		
+		# Load the shopping cart library with the specified settings
+		if ($this->settings['enableShoppingCart']) {
+			$shoppingCartSettings = array (
+				'name'				=> $this->settings['applicationName'],
+				'provider'			=> __CLASS__,
+				'database'			=> $this->settings['database'],		// Shop database
+				'administrators'	=> $this->administrators,
+				'pricePrefix'		=> 'Replacement value:',
+				'dateLimitations'	=> true,
+				'requireUser'		=> false,
+				'confirmationEmail'	=> false,		// Handled internally in the present class instead by checkout() then confirmationEmail()
+			);
+			require_once ('shoppingCart.php');
+			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings);
+		}
+		
 	}
 	
 	
@@ -770,6 +841,13 @@ class sprishop extends frontControllerApplication
 			#!# These should be moved back towards a fuller model
 			foreach ($data as &$item) {
 				$item = $this->compileItemComponents ($item, $type, $grouping);
+			}
+			
+			# Add the shopping cart controls
+			if ($this->settings['enableShoppingCart']) {
+				foreach ($data as &$item) {
+					$item['shoppingCartControlsHtml'] = $this->shoppingCart->controls ($item['id'], $this->baseUrl . $item['fragment'], $item['title'], $item['pricePerUnit'], $item['photographPath'], $item['stockAvailableNumeric'], false);
+				}
 			}
 			
 			# Perform grouping by title
@@ -1143,6 +1221,11 @@ class sprishop extends frontControllerApplication
 		# Add a button to the longer description if there is one and not in single-item mode
 		if ($moreInfo) {$html .= "\n\t\t" . "<p class=\"moreinfo\">{$link['start']}More information ..{$link['end']}</p>";}
 		$html .= "\n\t</div>";
+		if ($this->settings['enableShoppingCart']) {
+			if (!$multiselectComponents) {
+				$html .= $item['shoppingCartControlsHtml'];
+			}
+		}
 		$html .= "\n</div>";
 		
 		# Return the HTML
@@ -1278,11 +1361,21 @@ class sprishop extends frontControllerApplication
 				$temporary = $multiselectComponents[$key]['Price each'];
 				unset ($multiselectComponents[$key]['Price each']);
 				$multiselectComponents[$key]['Price each'] = $temporary;
+				
+				# Move the shoppingCartControlsHtml to the end
+				if ($this->settings['enableShoppingCart']) {
+					$temporary = $multiselectComponents[$key]['shoppingCartControlsHtml'];
+					unset ($multiselectComponents[$key]['shoppingCartControlsHtml']);
+					$multiselectComponents[$key]['shoppingCartControlsHtml'] = $temporary;
+				}
 			}
 		}
 		
 		# Set labels
 		$labels = array ();
+		if ($this->settings['enableShoppingCart']) {
+			$labels['shoppingCartControlsHtml'] = '';
+		}
 		
 		# Return
 		return $multiselectComponents;
@@ -1421,6 +1514,61 @@ class sprishop extends frontControllerApplication
 		
 		# Run the main settings system with the overriden attributes
 		return parent::settings ($dataBindingSettingsOverrides);
+	}
+	
+	
+	# Function to provide the shop basket
+	public function basket ()
+	{
+		# Hand off to the shopping cart system
+		$html = $this->shoppingCart->basket ();
+		
+		# Show the HTML
+		echo $html;
+	}
+	
+	
+	# Function to provide the shop checkout
+	public function checkout ()
+	{
+		# Hand off to the shopping cart system
+		$excludeFields = array ('collectionDetails', 'comments', 'stockAvailable', );
+		list ($result, $html) = $this->shoppingCart->checkout ($excludeFields);
+		
+		# End if no result
+		if (!$result) {
+			echo $html;
+			return false;
+		}
+		
+		# Send and show a confirmation e-mail
+		$html = $this->confirmationEmail ($result);
+		
+		# Show the HTML
+		echo $html;
+	}
+	
+	
+	# Function to list the bookings
+	public function review ($id = false)
+	{
+		# Determine if in final confirmation mode
+		$confirmationMode = (isSet ($_GET['mode']) && ($_GET['mode'] == 'confirmation'));
+		
+		# Hand off to the shopping cart system
+		list ($result, $html, $isUpdatedFinalised) = $this->shoppingCart->reviewOrders ($id, $confirmationMode, $messageLink = true);
+		
+		# End if no result
+		if (!$result) {
+			echo $html;
+			return false;
+		}
+		
+		# Send and show a confirmation e-mail
+		$html = $this->confirmationEmail ($result, true, $isUpdatedFinalised);
+		
+		# Show the HTML
+		echo $html;
 	}
 }
 

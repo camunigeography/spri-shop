@@ -51,3 +51,25 @@
 
 /* Editing */
 #sprishop table.sinenomine td, #sprishop .limitfields label {font-size: 0.95em;}
+
+/* Shopping cart */
+#sprishop div.item ul.actions {margin-top: 20px; margin-left: 0; float: none;}
+#sprishop table p.actions.right {margin-top: 10px; margin-left: 0;}
+#sprishop div.item table ul.actions {margin-top: 0;}
+#sprishop table.basket {margin-top: 20px; margin-bottom: 20px;}
+#sprishop table.basket th {font-weight: normal; font-size: 0.83em; line-height: 1.2em; background-color: #f9f9f9; border-bottom: 2px solid #ccc; padding-bottom: 5px;}
+#sprishop table.basket td.item {font-weight: bold;}
+#sprishop table.basket.editable td.price {width: 7em;}
+#sprishop p.yellowwarning {border: 1px solid #fc9; background-color: #ffc; padding: 5px; margin-top: 15px; margin-bottom: 2px;}
+
+/* Target (CSS3); see: http://css-tricks.com/automatic-table-of-contents/ */
+:target {-webkit-animation: highlight 4s ease; animation: highlight 4s ease; padding-top: 2em;}
+@keyframes highlight {
+	from {background: #eee;}
+	to {background: white;}
+}
+@-webkit-keyframes highlight {
+	from {background: #eee;}
+	to {background: white;}
+}
+

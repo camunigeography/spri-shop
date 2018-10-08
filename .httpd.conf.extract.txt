@@ -20,6 +20,10 @@
 	# Editing
 	Use MacroSinenomineEmbeddedWholeDb "$applicationBaseUrl" "/data" "editing"
 	
+	# Shopping cart
+	RewriteRule ^$applicationBaseUrl/(basket|checkout|review)/$ $applicationBaseUrl/index.html?action=$1 [L]
+	RewriteRule ^$applicationBaseUrl/(basket|checkout|review)$ $applicationBaseUrl/$1/ [L,R]
+	
 	# Old shop URLs
 	RewriteRule ^$applicationBaseUrl/education/? http://www.spri.cam.ac.uk$applicationBaseUrl/books/youngreaders.html [L,R=301]
 	
