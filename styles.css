@@ -11,7 +11,7 @@
 
 /* Sublists */
 #sprishop ul.sublist {margin-left: 0; padding-left: 0;}
-#sprishop ul.sublist li {max-width: 230px; list-style-type: none; border: 1px solid #ccc; background-color: #f1f1f1; width: 50%; margin: 0 1.4em 1.4em 0; float: left; border-bottom-right-radius: 10px;}
+#sprishop ul.sublist li {list-style-type: none; border: 1px solid #ccc; background-color: #f1f1f1; width: 230px; margin: 0 1.4em 1.4em 0; float: left; border-bottom-right-radius: 10px;}
 #sprishop ul.sublist li a {display: block; padding: 8px}
 #sprishop ul.sublist li span img {max-width: 55px; max-height: 70px; margin-right: 10px; border: 0;}
 
@@ -49,9 +49,6 @@
 #sprishop p.pagination a.selected, #sprishop p.orderby a.selected {background-color: #bbb;}
 #sprishop p.pagination a:hover, #sprishop p.orderby a:hover {border-color: #6100c1; background-color: #f0e1ff; text-decoration: none;}
 
-/* Editing */
-#sprishop table.sinenomine td, #sprishop .limitfields label {font-size: 0.95em;}
-
 /* Shopping cart */
 #sprishop div.item ul.actions {margin-top: 20px; margin-left: 0; float: none;}
 #sprishop table p.actions.right {margin-top: 10px; margin-left: 0;}
@@ -61,6 +58,9 @@
 #sprishop table.basket td.item {font-weight: bold;}
 #sprishop table.basket.editable td.price {width: 7em;}
 #sprishop p.yellowwarning {border: 1px solid #fc9; background-color: #ffc; padding: 5px; margin-top: 15px; margin-bottom: 2px;}
+
+/* Editing */
+#sprishop table.sinenomine td, #sprishop .limitfields label {font-size: 0.95em;}
 
 /* Target (CSS3); see: http://css-tricks.com/automatic-table-of-contents/ */
 :target {-webkit-animation: highlight 4s ease; animation: highlight 4s ease; padding-top: 2em;}
@@ -73,3 +73,8 @@
 	to {background: white;}
 }
 
+/* Mobile adjustments */
+@media screen and (max-width: 480px) {
+	#sprishop .categories li {height: 135px; width: 145px; margin-right: 10px;}
+	#sprishop ul.sublist li {width: 280px;}
+}
