@@ -23,6 +23,8 @@
 	# Shopping cart
 	RewriteRule ^$applicationBaseUrl/(basket|checkout|orders|callback)/$ $applicationBaseUrl/index.html?action=$1 [L]
 	RewriteRule ^$applicationBaseUrl/(basket|checkout|orders|callback)$ $applicationBaseUrl/$1/ [L,R]
+	RewriteRule ^$applicationBaseUrl/(orders)/([1-9][0-9]*)/$ $applicationBaseUrl/index.html?action=$1&item=$2 [L]
+	RewriteRule ^$applicationBaseUrl/(orders)/([1-9][0-9]*)$ $applicationBaseUrl/$1/$2/ [L,R]
 	
 	# Old shop URLs
 	RewriteRule ^$applicationBaseUrl/education/? http://www.spri.cam.ac.uk$applicationBaseUrl/books/youngreaders.html [L,R=301]
