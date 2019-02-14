@@ -1584,7 +1584,7 @@ class sprishop extends frontControllerApplication
 		$confirmationMode = (isSet ($_GET['mode']) && ($_GET['mode'] == 'confirmation'));
 		
 		# Hand off to the shopping cart system
-		list ($result, $html, $isUpdatedFinalised) = $this->shoppingCart->orders ($id, $confirmationMode, $messageLink = true);
+		list ($result, $html, $isUpdatedFinalised) = $this->shoppingCart->orders ($id, $confirmationMode);
 		
 		# End if no result
 		if (!$result) {
