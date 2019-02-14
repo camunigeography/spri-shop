@@ -33,6 +33,13 @@ class sprishop extends frontControllerApplication
 			'imageResizeTo'					=> 200,
 			'tabUlClass'					=> 'tabsflat',
 			'enableShoppingCart'			=> false,
+			'enablePaymentWorkflow'			=> true,
+			'shoppingCartPaymentUrl'		=> false,
+			'shoppingCartSharedSecret'		=> false,
+			'shoppingCartClientId'			=> false,
+			'shoppingCartOrderPrefix'		=> false,
+			'shoppingCartVatCode'			=> false,
+			'shoppingCartOrderDescription'	=> 'Payment for online shop order no. %s',	// %s can be used to state the order number
 		);
 		
 		# Return the defaults
@@ -75,6 +82,12 @@ class sprishop extends frontControllerApplication
 				'description' => 'Checkout',
 				'usetab' => 'basket',
 				'url' => 'checkout/',
+				'enableIf' => $this->settings['enableShoppingCart'],
+			),
+			'callback' => array (
+				'description' => false,
+				'usetab' => 'basket',
+				'url' => 'callback/',
 				'enableIf' => $this->settings['enableShoppingCart'],
 			),
 			'orders' => array (
@@ -521,10 +534,17 @@ class sprishop extends frontControllerApplication
 				'administrators'		=> $this->administrators,
 				'dateLimitations'		=> true,
 				'requireUser'			=> false,
-				'confirmationEmail'		=> false,
+				'confirmationEmail'		=> true,
+				'enablePaymentWorkflow'	=> $this->settings['enablePaymentWorkflow'],
+				'paymentUrl'			=> $this->settings['shoppingCartPaymentUrl'],
+				'sharedSecret'			=> $this->settings['shoppingCartSharedSecret'],
+				'clientId'				=> $this->settings['shoppingCartClientId'],
+				'orderPrefix'			=> $this->settings['shoppingCartOrderPrefix'],
+				'vatCode'				=> $this->settings['shoppingCartVatCode'],
+				'orderDescription'		=> $this->settings['shoppingCartOrderDescription'],
 			);
 			require_once ('shoppingCart.php');
-			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings);
+			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings, $userData = array (), $this->userIsAdministrator);
 		}
 		
 	}
@@ -1541,8 +1561,16 @@ class sprishop extends frontControllerApplication
 			return false;
 		}
 		
-		# Send and show a confirmation e-mail
-		$html = $this->confirmationEmail ($result);
+		# Show the HTML
+		echo $html;
+	}
+	
+	
+	# Function to provide the e-payments callback
+	public function callback ()
+	{
+		# Hand off to the shopping cart system
+		$html = $this->shoppingCart->callback ();
 		
 		# Show the HTML
 		echo $html;
