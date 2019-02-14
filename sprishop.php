@@ -77,11 +77,11 @@ class sprishop extends frontControllerApplication
 				'url' => 'checkout/',
 				'enableIf' => $this->settings['enableShoppingCart'],
 			),
-			'review' => array (
+			'orders' => array (
 				'description' => false,
-				'tab' => 'Review',
+				'tab' => 'Orders',
 				'icon' => 'wand',
-				'url' => 'review/',
+				'url' => 'orders/',
 				'administrator' => true,
 				'enableIf' => $this->settings['enableShoppingCart'],
 			),
@@ -1549,8 +1549,8 @@ class sprishop extends frontControllerApplication
 	}
 	
 	
-	# Function to list the bookings
-	public function review ($id = false)
+	# Function to list the orders
+	public function orders ($id = false)
 	{
 		# Determine if in final confirmation mode
 		$confirmationMode = (isSet ($_GET['mode']) && ($_GET['mode'] == 'confirmation'));
