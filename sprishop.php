@@ -865,6 +865,7 @@ class sprishop extends frontControllerApplication
 			# Add the shopping cart controls
 			if ($this->settings['enableShoppingCart']) {
 				foreach ($data as &$item) {
+					#!# When groupByTitle is applied, each $item['fragment'] after the first in the group needs to be rewritten to be the first, so that the after-posting redirect position is correct
 					$item['shoppingCartControlsHtml'] = $this->shoppingCart->controls ($item['id'], $this->baseUrl . $item['fragment'], $item['title'], $item['pricePerUnit'], $item['photographPath'], $item['stockAvailableNumeric'], false);
 				}
 			}
