@@ -1465,7 +1465,7 @@ class sprishop extends frontControllerApplication
 		);
 		
 		# Define table attributes
-		$attributesByTable = $this->formDataBindingAttributes ($table);
+		$attributesByTable = $this->formDataBindingAttributes ();
 		$attributes = array ();
 		foreach ($attributesByTable as $table => $attributesForTable) {
 			foreach ($attributesForTable as $field => $fieldAttributes) {
