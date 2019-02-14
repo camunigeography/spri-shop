@@ -19,20 +19,20 @@ class sprishop extends frontControllerApplication
 	{
 		# Specify available arguments as defaults or as NULL (to represent a required argument)
 		$defaults = array (
-			'applicationName'		=> 'Museum Shop',
-			'hostname'				=> 'localhost',
-			'database'				=> 'sprishop',
-			'table'					=> 'shop',
-			'div'					=> 'sprishop',
-			'administrators'		=> true,
-			'useEditing'			=> true,
-			'imageStoreRoot'		=> '/images/shop',
-			'sectionsImages'		=> '/_sections/',
-			'imageGenerationStub'	=> '/images/generator',
-			'showPublisherLinks'	=> true,
-			'imageResizeTo'			=> 200,
-			'tabUlClass'			=> 'tabsflat',
-			'enableShoppingCart'	=> false,
+			'applicationName'				=> 'Museum Shop',
+			'hostname'						=> 'localhost',
+			'database'						=> 'sprishop',
+			'table'							=> 'shop',
+			'div'							=> 'sprishop',
+			'administrators'				=> true,
+			'useEditing'					=> true,
+			'imageStoreRoot'				=> '/images/shop',
+			'sectionsImages'				=> '/_sections/',
+			'imageGenerationStub'			=> '/images/generator',
+			'showPublisherLinks'			=> true,
+			'imageResizeTo'					=> 200,
+			'tabUlClass'					=> 'tabsflat',
+			'enableShoppingCart'			=> false,
 		);
 		
 		# Return the defaults
@@ -515,13 +515,13 @@ class sprishop extends frontControllerApplication
 		# Load the shopping cart library with the specified settings
 		if ($this->settings['enableShoppingCart']) {
 			$shoppingCartSettings = array (
-				'name'				=> $this->settings['applicationName'],
-				'provider'			=> __CLASS__,
-				'database'			=> $this->settings['database'],		// Shop database
-				'administrators'	=> $this->administrators,
-				'dateLimitations'	=> true,
-				'requireUser'		=> false,
-				'confirmationEmail'	=> false,		// Handled internally in the present class instead by checkout() then confirmationEmail()
+				'name'					=> $this->settings['applicationName'],
+				'provider'				=> __CLASS__,
+				'database'				=> $this->settings['database'],		// Shop database
+				'administrators'		=> $this->administrators,
+				'dateLimitations'		=> true,
+				'requireUser'			=> false,
+				'confirmationEmail'		=> false,
 			);
 			require_once ('shoppingCart.php');
 			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings);
