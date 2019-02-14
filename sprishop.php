@@ -52,9 +52,9 @@ class sprishop extends frontControllerApplication
 				'tab' => 'Home',
 				'droplist' => true,
 			),
-			'order' => array (
+			'ordering' => array (
 				'description' => false,
-				'url' => 'order/',
+				'url' => 'ordering/',
 				'tab' => 'How to order',
 				'droplist' => true,
 			),
@@ -638,7 +638,7 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to show the ordering page
-	public function order ()
+	public function ordering ()
 	{
 		# Define the HTML
 		$html  = '<h2>How to order</h2>';

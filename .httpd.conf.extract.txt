@@ -28,7 +28,7 @@
 	RewriteRule ^$applicationBaseUrl/education/? http://www.spri.cam.ac.uk$applicationBaseUrl/books/youngreaders.html [L,R=301]
 	
 	# Main shop URLs
-	RewriteRule ^$applicationBaseUrl/order/$ $applicationBaseUrl/index.html?action=order [L]
+	RewriteRule ^$applicationBaseUrl/ordering/$ $applicationBaseUrl/index.html?action=ordering [L]
 	RewriteRule ^$applicationBaseUrl/([^/]+)(/|/index.html)$ $applicationBaseUrl/index.html?action=listing&type=$1
 	RedirectMatch Permanent ^$applicationBaseUrl/([a-z]+)$ http://www.spri.cam.ac.uk$applicationBaseUrl/$1/
 	RewriteRule ^$applicationBaseUrl/([^/]+)/([a-z]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&grouping=$2
