@@ -519,7 +519,6 @@ class sprishop extends frontControllerApplication
 				'provider'			=> __CLASS__,
 				'database'			=> $this->settings['database'],		// Shop database
 				'administrators'	=> $this->administrators,
-				'pricePrefix'		=> 'Replacement value:',
 				'dateLimitations'	=> true,
 				'requireUser'		=> false,
 				'confirmationEmail'	=> false,		// Handled internally in the present class instead by checkout() then confirmationEmail()
