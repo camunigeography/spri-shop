@@ -1461,6 +1461,7 @@ class sprishop extends frontControllerApplication
 			'richtextWidth' => 600,
 			'richtextHeight' => 200,
 			'hideTableIntroduction' => false,
+			'tableCommentsInSelectionListOnly' => true,
 		);
 		
 		# Define table attributes
