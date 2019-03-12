@@ -1082,12 +1082,19 @@ class sprishop extends frontControllerApplication
 					LEFT OUTER JOIN sprishop._materials ON {$type}.material__JOIN__sprishop___materials__reserved = _materials.id
 					";
 				break;
-			case 'jewellery':
 			case 'collectibles':
+			case 'jewellery':
 				$query = "
 					SELECT {$type}.*, _jewelleryTypes.name
 					FROM {$type}
 					LEFT OUTER JOIN sprishop._jewelleryTypes ON {$type}.type__JOIN__sprishop___jewelleryTypes__reserved = _jewelleryTypes.id
+					";
+				break;
+			case 'maps':
+				$query = "
+					SELECT {$type}.*, _publishers.name publisherName, _publishers.url publisherUrl
+					FROM {$type}
+					LEFT OUTER JOIN _publishers ON {$type}.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
 					";
 				break;
 			case 'multimedia':
@@ -1095,13 +1102,6 @@ class sprishop extends frontControllerApplication
 					SELECT {$type}.*, _multimediaTypes.name multimediaFormat, _publishers.name publisherName, _publishers.url publisherUrl
 					FROM {$type}
 					LEFT OUTER JOIN _multimediaTypes ON {$type}.format__JOIN__sprishop___multimediaTypes__reserved = _multimediaTypes.id
-					LEFT OUTER JOIN _publishers ON {$type}.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
-					";
-				break;
-			case 'maps':
-				$query = "
-					SELECT {$type}.*, _publishers.name publisherName, _publishers.url publisherUrl
-					FROM {$type}
 					LEFT OUTER JOIN _publishers ON {$type}.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
 					";
 				break;
