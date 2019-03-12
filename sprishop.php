@@ -866,7 +866,7 @@ class sprishop extends frontControllerApplication
 			if ($this->settings['enableShoppingCart']) {
 				foreach ($data as &$item) {
 					#!# When groupByTitle is applied, each $item['fragment'] after the first in the group needs to be rewritten to be the first, so that the after-posting redirect position is correct
-					$item['shoppingCartControlsHtml'] = $this->shoppingCart->controls ($item['id'], $this->baseUrl . $item['fragment'], $item['title'], $item['pricePerUnit'], $item['photographPath'], $item['stockAvailableNumeric'], false);
+					$item['shoppingCartControlsHtml'] = $this->shoppingCart->controls ($item['id'], $this->baseUrl . $item['fragment'], $item['title'], $item['pricePerUnit'], $item['priceIncludesVat'], $item['photographPath'], $item['stockAvailableNumeric'], false);
 				}
 			}
 			
@@ -1279,7 +1279,6 @@ class sprishop extends frontControllerApplication
 			if ($item['priceIncludesVat'] == 'N') {
 				$item['pricePerUnitFormatted'] .= ' &nbsp;<span class="vat">(VAT not chargeable)</span>';
 			}
-			unset ($item['priceIncludesVat']);
 		}
 		
 		# Combine width and height
