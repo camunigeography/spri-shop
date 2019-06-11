@@ -39,5 +39,6 @@
 	RewriteRule ^$applicationBaseUrl/([^/]+)/page([^.]+)-([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&page=$2&orderby=$3
 	RewriteRule ^$applicationBaseUrl/([^/]+)/page([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&page=$2
 	RewriteRule ^$applicationBaseUrl/([^/]+)/-([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&orderby=$2
+	RewriteRule ^$applicationBaseUrl/(stocklist).(html|csv)$ $applicationBaseUrl/index.html?action=$1&format=$2
 	
 </Macro>
