@@ -98,6 +98,14 @@ class sprishop extends frontControllerApplication
 				'administrator' => true,
 				'enableIf' => $this->settings['enableShoppingCart'],
 			),
+			'stocklist' => array (
+				'description' => 'Stock list',
+				'parent' => 'admin',
+				'subtab' => 'Export',
+				'icon' => 'application_view_list',
+				'url' => 'stocklist.html',
+				'administrator' => true,
+			),
 		);
 		
 		# Return the actions
@@ -1602,6 +1610,58 @@ class sprishop extends frontControllerApplication
 		
 		# Send and show a confirmation e-mail
 		$html = $this->confirmationEmail ($result, true, $isUpdatedFinalised);
+		
+		# Show the HTML
+		echo $html;
+	}
+	
+	
+	# Function to create a stock list for export
+	public function stocklist ()
+	{
+		# Start the HTML
+		$html = '';
+		
+		# Compile a database query, consisting of a union of queries of each product type table
+		$subqueries = array ();
+		foreach ($this->sections as $section => $attributes) {
+			if ($attributes['type'] != 'section') {continue;}	// Skip themes
+			$titleField = ($section == 'clothing' ? 'title__JOIN__sprishop___clothingTypes__reserved' : 'title');
+			$subqueries[$section] = "SELECT '{$section}' AS category, id, {$titleField}, onlineSales, pricePerUnit, priceIncludesVat, stockAvailable FROM `{$section}`";
+		}
+		$query = implode (' UNION ', $subqueries) . ';';
+		
+		# Get the data
+		$data = $this->databaseConnection->getData ($query);
+		
+		# Reformat
+		foreach ($data as $index => $record) {
+			$data[$index]['onlineSales'] = ($record['onlineSales'] == 1 ? 'Y' : '');
+		}
+		
+		# Get the headings
+		$headerLabels = array (
+			'category' => 'Category',
+			'id' => '#',
+			'title' => 'Title',
+			'onlineSales' => 'Online sales',
+			'pricePerUnit' => 'Price per unit',
+			'priceIncludesVat' => 'Price includes VAT',
+			'stockAvailable' => 'Stock available',
+		);
+		
+		# Export as CSV if required
+		if (isSet ($_GET['format']) && $_GET['format'] == 'csv') {
+			ob_clean ();
+			//flush ();
+			require_once ('csv.php');
+			csv::serve ($data, __FUNCTION__, $timestamp = true, $headerLabels);
+			die;
+		}
+		
+		# Constuct as table
+		$html  = "\n<p class=\"actions right\"><a href=\"{$this->baseUrl}/stocklist.csv\"><img src=\"/images/icons/page_excel.png\" class=\"icon\"> Export</a></p>";
+		$html .= application::htmlTable ($data, $headerLabels, 'lines', false);
 		
 		# Show the HTML
 		echo $html;
