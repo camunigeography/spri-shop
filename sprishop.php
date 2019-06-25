@@ -1092,7 +1092,11 @@ class sprishop extends frontControllerApplication
 				break;
 			case 'maps':
 				$query = "
-					SELECT {$type}.*, _publishers.name publisherName, _publishers.url publisherUrl
+					SELECT
+						{$type}.*,
+						CONCAT(sizeUnfoldedWidthInCm, 'cm (width) x ', sizeUnfoldedHeightInCm, 'cm (height)') AS sizeUnfolded,
+						CONCAT(sizeFoldedWidthInCm, 'cm (width) x ', sizeFoldedHeightInCm, 'cm (height)') AS sizeFolded,
+						 _publishers.name publisherName, _publishers.url publisherUrl
 					FROM {$type}
 					LEFT OUTER JOIN _publishers ON {$type}.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
 					";
@@ -1204,6 +1208,8 @@ class sprishop extends frontControllerApplication
 			'stockIdealLevel' => NULL,
 			'stockMinimumLevel' => NULL,
 			'type' => NULL,	// Is a __JOIN__ derivative
+			'sizeUnfolded' => 'Size unfolded: %text',
+			'sizeFolded' => 'Size folded: %text',
 		);
 		$attributesHtml = array ();
 		foreach ($attributes as $attribute => $value) {
