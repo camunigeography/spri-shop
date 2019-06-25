@@ -240,10 +240,10 @@ class sprishop extends frontControllerApplication
 			  `mapDate` date DEFAULT NULL,
 			  `publicationDate` date NOT NULL,
 			  `isbn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `sizeFoldedHeightInCm` int(10) UNSIGNED DEFAULT NULL,
-			  `sizeFoldedWidthInCm` int(10) UNSIGNED DEFAULT NULL,
-			  `sizeUnfoldedHeightInCm` int(10) UNSIGNED DEFAULT NULL,
-			  `sizeUnfoldedWidthInCm` int(10) UNSIGNED DEFAULT NULL
+			  `sizeFoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
+			  `sizeFoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
+			  `sizeUnfoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
+			  `sizeUnfoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 			
 			CREATE TABLE `mugs` (
@@ -1102,8 +1102,8 @@ class sprishop extends frontControllerApplication
 				$query = "
 					SELECT
 						{$type}.*,
-						CONCAT(sizeUnfoldedWidthInCm, 'cm (width) x ', sizeUnfoldedHeightInCm, 'cm (height)') AS sizeUnfolded,
-						CONCAT(sizeFoldedWidthInCm, 'cm (width) x ', sizeFoldedHeightInCm, 'cm (height)') AS sizeFolded,
+						REPLACE( CONCAT(sizeUnfoldedWidthInCm, 'cm (width) x ', sizeUnfoldedHeightInCm, 'cm (height)'), '.0cm', 'cm') AS sizeUnfolded,
+						REPLACE( CONCAT(sizeFoldedWidthInCm, 'cm (width) x ', sizeFoldedHeightInCm, 'cm (height)'), '.0cm', 'cm') AS sizeFolded,
 						 _publishers.name publisherName, _publishers.url publisherUrl
 					FROM {$type}
 					LEFT OUTER JOIN _publishers ON {$type}.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
