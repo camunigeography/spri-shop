@@ -61,6 +61,7 @@
 
 /* Editing */
 #sprishop table.sinenomine td, #sprishop .limitfields label {font-size: 0.95em;}
+#sprishop table.stocklist a {white-space: nowrap; padding: 3px 6px;}
 
 /* Target (CSS3); see: http://css-tricks.com/automatic-table-of-contents/ */
 :target {-webkit-animation: highlight 4s ease; animation: highlight 4s ease; padding-top: 2em;}

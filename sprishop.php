@@ -1659,10 +1659,15 @@ class sprishop extends frontControllerApplication
 			die;
 		}
 		
+		# Add links
+		foreach ($data as $index => $record) {
+			$data[$index]['id'] = "<a href=\"{$this->baseUrl}/data/{$record['category']}/{$record['id']}/edit.html\" class=\"actions\"><img src=\"/images/icons/pencil.png\" /> {$record['id']}</a>";
+		}
+		
 		# Constuct as table
 		$html  = "\n<p class=\"actions right\"><a href=\"{$this->baseUrl}/stocklist.csv\"><img src=\"/images/icons/page_excel.png\" class=\"icon\"> Export</a></p>";
 		$html .= "\n<p>This listing shows items set to be visible and permitted for online sales.</p>";
-		$html .= application::htmlTable ($data, $headerLabels, 'lines', false);
+		$html .= application::htmlTable ($data, $headerLabels, 'stocklist lines', $keyAsFirstColumn = false, false, $allowHtml = array ('id'));
 		
 		# Show the HTML
 		echo $html;
