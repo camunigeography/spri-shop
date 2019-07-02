@@ -1622,6 +1622,9 @@ class sprishop extends frontControllerApplication
 		# Start the HTML
 		$html = '';
 		
+		# Determine whether exporting as CSV
+		$csvExport = (isSet ($_GET['format']) && $_GET['format'] == 'csv');
+		
 		# Compile a database query, consisting of a union of queries of each product type table
 		$subqueries = array ();
 		foreach ($this->sections as $section => $attributes) {
@@ -1639,6 +1642,18 @@ class sprishop extends frontControllerApplication
 			$data[$index]['onlineSales'] = ($record['onlineSales'] == 1 ? 'Y' : '');
 		}
 		
+		# Add links
+		if (!$csvExport) {
+			foreach ($data as $index => $record) {
+				$data[$index]['id'] = "<a href=\"{$this->baseUrl}/data/{$record['category']}/{$record['id']}/edit.html\" class=\"actions\"><img src=\"/images/icons/pencil.png\" /> {$record['id']}</a>";
+			}
+		}
+		
+		# Use realnames for category
+		foreach ($data as $index => $record) {
+			$data[$index]['category'] = $this->productTypes[$record['category']];
+		}
+		
 		# Get the headings
 		$headerLabels = array (
 			'category' => 'Category',
@@ -1651,17 +1666,12 @@ class sprishop extends frontControllerApplication
 		);
 		
 		# Export as CSV if required
-		if (isSet ($_GET['format']) && $_GET['format'] == 'csv') {
+		if ($csvExport) {
 			ob_clean ();
 			//flush ();
 			require_once ('csv.php');
 			csv::serve ($data, __FUNCTION__, $timestamp = true, $headerLabels);
 			die;
-		}
-		
-		# Add links
-		foreach ($data as $index => $record) {
-			$data[$index]['id'] = "<a href=\"{$this->baseUrl}/data/{$record['category']}/{$record['id']}/edit.html\" class=\"actions\"><img src=\"/images/icons/pencil.png\" /> {$record['id']}</a>";
 		}
 		
 		# Constuct as table
