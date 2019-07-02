@@ -1627,7 +1627,7 @@ class sprishop extends frontControllerApplication
 		foreach ($this->sections as $section => $attributes) {
 			if ($attributes['type'] != 'section') {continue;}	// Skip themes
 			$titleField = ($section == 'clothing' ? 'title__JOIN__sprishop___clothingTypes__reserved' : 'title');
-			$subqueries[$section] = "SELECT '{$section}' AS category, id, {$titleField}, onlineSales, pricePerUnit, priceIncludesVat, stockAvailable FROM `{$section}`";
+			$subqueries[$section] = "SELECT '{$section}' AS category, id, {$titleField}, onlineSales, pricePerUnit, priceIncludesVat, stockAvailable FROM `{$section}` WHERE visible = 'Y'";
 		}
 		$query = implode (' UNION ', $subqueries) . ';';
 		
@@ -1661,6 +1661,7 @@ class sprishop extends frontControllerApplication
 		
 		# Constuct as table
 		$html  = "\n<p class=\"actions right\"><a href=\"{$this->baseUrl}/stocklist.csv\"><img src=\"/images/icons/page_excel.png\" class=\"icon\"> Export</a></p>";
+		$html .= "\n<p>This listing shows items set to be visible and permitted for online sales.</p>";
 		$html .= application::htmlTable ($data, $headerLabels, 'lines', false);
 		
 		# Show the HTML
