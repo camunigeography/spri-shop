@@ -101,7 +101,7 @@ class sprishop extends frontControllerApplication
 			'stocklist' => array (
 				'description' => 'Stock list',
 				'parent' => 'admin',
-				'subtab' => 'Export',
+				'subtab' => 'Stock list',
 				'icon' => 'application_view_list',
 				'url' => 'stocklist.html',
 				'administrator' => true,
