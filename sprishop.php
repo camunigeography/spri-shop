@@ -1637,6 +1637,11 @@ class sprishop extends frontControllerApplication
 		# Get the data
 		$data = $this->databaseConnection->getData ($query);
 		
+		# Add pound symbol before prices
+		foreach ($data as $index => $record) {
+			$data[$index]['pricePerUnit'] = "\u{00a3}" . $record['pricePerUnit'];
+		}
+		
 		# Add links
 		if (!$csvExport) {
 			foreach ($data as $index => $record) {
