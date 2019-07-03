@@ -1630,17 +1630,12 @@ class sprishop extends frontControllerApplication
 		foreach ($this->sections as $section => $attributes) {
 			if ($attributes['type'] != 'section') {continue;}	// Skip themes
 			$titleField = ($section == 'clothing' ? 'title__JOIN__sprishop___clothingTypes__reserved' : 'title');
-			$subqueries[$section] = "SELECT '{$section}' AS category, id, {$titleField}, onlineSales, pricePerUnit, priceIncludesVat, stockAvailable FROM `{$section}` WHERE visible = 'Y'";
+			$subqueries[$section] = "SELECT '{$section}' AS category, id, {$titleField}, pricePerUnit, priceIncludesVat, stockAvailable FROM `{$section}` WHERE visible = 'Y'";
 		}
 		$query = implode (' UNION ', $subqueries) . ';';
 		
 		# Get the data
 		$data = $this->databaseConnection->getData ($query);
-		
-		# Reformat
-		foreach ($data as $index => $record) {
-			$data[$index]['onlineSales'] = ($record['onlineSales'] == 1 ? 'Y' : '');
-		}
 		
 		# Add links
 		if (!$csvExport) {
@@ -1659,7 +1654,6 @@ class sprishop extends frontControllerApplication
 			'category' => 'Category',
 			'id' => '#',
 			'title' => 'Title',
-			'onlineSales' => 'Online sales',
 			'pricePerUnit' => 'Price per unit',
 			'priceIncludesVat' => 'Price includes VAT',
 			'stockAvailable' => 'Stock available',
