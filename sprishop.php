@@ -122,7 +122,7 @@ class sprishop extends frontControllerApplication
 			  `username` varchar(255) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL COMMENT 'Username',
 			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?',
 			  `privilege` enum('Administrator','Restricted administrator') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level',
-			  `state` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Headings expanded'
+			  `state` varchar(255) COLLATE utf8_unicode_ci NULL COMMENT 'Headings expanded'
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
