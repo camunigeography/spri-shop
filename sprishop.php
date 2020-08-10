@@ -119,18 +119,18 @@ class sprishop extends frontControllerApplication
 		# Define the SQL
 		$sql = "
 			CREATE TABLE `administrators` (
-			  `username` varchar(255) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL COMMENT 'Username',
-			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?',
-			  `privilege` enum('Administrator','Restricted administrator') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level',
-			  `state` varchar(255) COLLATE utf8_unicode_ci NULL COMMENT 'Headings expanded'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='System administrators';
+			  `username` varchar(255) COLLATE utf8mb4_unicode_ci PRIMARY KEY NOT NULL COMMENT 'Username',
+			  `active` enum('','Yes','No') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?',
+			  `privilege` enum('Administrator','Restricted administrator') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level',
+			  `state` varchar(255) COLLATE utf8mb4_unicode_ci NULL COMMENT 'Headings expanded'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) PRIMARY KEY NOT NULL COMMENT 'Automatic key (ignored)',
-			  `feedbackRecipient` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Feedback recipient e-mail',
-			  `introductionHtml` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Introductory text',
-			  `orderingHtml` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Ordering page'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Settings';
+			  `feedbackRecipient` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Feedback recipient e-mail',
+			  `introductionHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Introductory text',
+			  `orderingHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ordering page'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `books` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -138,351 +138,351 @@ class sprishop extends frontControllerApplication
 			  `author__JOIN__sprishop___authors__reserved` int(11) NOT NULL,
 			  `author2__JOIN__sprishop___authors__reserved` int(11) DEFAULT NULL,
 			  `author3__JOIN__sprishop___authors__reserved` int(11) DEFAULT NULL,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `publisher__JOIN__sprishop___publishers__reserved` int(11) DEFAULT NULL,
 			  `publicationDate` int(4) NOT NULL DEFAULT '0',
-			  `isbn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `isbn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `pages` int(11) DEFAULT NULL,
-			  `binding` enum('Hardback','Paperback') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Hardback',
-			  `edition` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `childrens` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `binding` enum('Hardback','Paperback') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Hardback',
+			  `edition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `childrens` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `cards` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `type__JOIN__sprishop___cardTypes__reserved` int(11) DEFAULT NULL,
 			  `sizeWidthInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `sizeHeightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
-			  `message` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Blank',
-			  `colour` enum('Colour','Black & white','Unknown') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Colour',
+			  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Blank',
+			  `colour` enum('Colour','Black & white','Unknown') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Colour',
 			  `numberPerPack` int(10) UNSIGNED NOT NULL DEFAULT '0'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `clothing` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `title__JOIN__sprishop___clothingTypes__reserved` int(11) NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `size__JOIN__sprishop___sizes__reserved` int(11) DEFAULT NULL,
-			  `colour__JOIN__sprishop___colours__reserved` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `colour__JOIN__sprishop___colours__reserved` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `collectibles` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL,
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
-			  `sizeInCm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `jewellery` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL,
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
-			  `sizeInCm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `maps` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `publisher__JOIN__sprishop___publishers__reserved` int(11) DEFAULT NULL,
 			  `scaleAs1To` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `mapDate` date DEFAULT NULL,
 			  `publicationDate` date NOT NULL,
-			  `isbn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `isbn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `sizeFoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeFoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeUnfoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeUnfoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `mugs` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `multimedia` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `format__JOIN__sprishop___multimediaTypes__reserved` int(11) DEFAULT NULL,
-			  `colour` enum('Colour','Black & white','Not applicable','Unknown') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Colour',
+			  `colour` enum('Colour','Black & white','Not applicable','Unknown') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Colour',
 			  `publisher__JOIN__sprishop___publishers__reserved` int(11) NOT NULL,
-			  `performer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `producer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `performer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `producer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `productionDate` date DEFAULT NULL,
 			  `publicationDate` date DEFAULT NULL,
 			  `lengthMinutes` int(10) UNSIGNED NOT NULL DEFAULT '0',
-			  `technicalDetails` text COLLATE utf8_unicode_ci,
-			  `isbn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `technicalDetails` text COLLATE utf8mb4_unicode_ci,
+			  `isbn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `posters` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `artist` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `type` enum('Poster','Picture','Photograph','Facsimile reproduction','Calendar','Black frame','Black ash frame') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Poster',
-			  `colour` enum('Colour','Black & white','Unknown') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Colour',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `artist` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `type` enum('Poster','Picture','Photograph','Facsimile reproduction','Calendar','Black frame','Black ash frame') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Poster',
+			  `colour` enum('Colour','Black & white','Unknown') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Colour',
 			  `sizeWidthInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `sizeHeightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
-			  `publisher` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `dateCreated` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `publisher` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `dateCreated` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stamps` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stationery` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `toys` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-			  `photographFilename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `photographFilename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `heightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
-			  `relatedInstitution` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `safety` text COLLATE utf8_unicode_ci,
-			  `material` text COLLATE utf8_unicode_ci
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `relatedInstitution` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `safety` text COLLATE utf8mb4_unicode_ci,
+			  `material` text COLLATE utf8mb4_unicode_ci
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_authors` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  `forname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `forname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `dateOfBirth` date DEFAULT NULL,
 			  `dateOfDeath` date DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_booksSubtypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
-			  `subtypeName` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of book subtype',
-			  `subtypeUrlSlug` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'URL key for this subtype',
+			  `subtypeName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of book subtype',
+			  `subtypeUrlSlug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL key for this subtype',
 			  `featured__JOIN__sprishop__books__reserved` int(11) NOT NULL COMMENT 'Featured item',
 			  UNIQUE KEY `subtypeUrlSlug` (`subtypeUrlSlug`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Book subtypes';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Book subtypes';
 			
 			CREATE TABLE `_cardTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_clothingTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `photographFilename` varchar(85) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  `title` varchar(85) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-			  `description` text COLLATE utf8_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8_unicode_ci
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `photographFilename` varchar(85) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `title` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_colours` (
-			  `hexCode` varchar(255) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
-			  `commonName` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `hexCode` varchar(6) COLLATE utf8mb4_unicode_ci PRIMARY KEY NOT NULL,
+			  `commonName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_jewelleryTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_materials` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_multimediaTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_publishers` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_sizes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `__announcement` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
-			  `announcementText` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Accouncement text',
+			  `announcementText` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Accouncement text',
 			  `startDate` date NOT NULL,
 			  `endDate` date NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Announcement';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Announcement';
 			
 			CREATE TABLE `__featured` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `section__JOIN__sprishop____sectionData__reserved` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `section__JOIN__sprishop____sectionData__reserved` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `itemnumber` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `priority` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Featured items';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Featured items';
 			
 			CREATE TABLE `__sectionData` (
-			  `id` varchar(85) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL DEFAULT '',
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title (on front page)',
-			  `singular` varchar(85) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-			  `plural` varchar(85) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-			  `description` text COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Sections';
+			  `id` varchar(85) COLLATE utf8mb4_unicode_ci PRIMARY KEY NOT NULL DEFAULT '',
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title (on front page)',
+			  `singular` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Sections';
 			
 			CREATE TABLE `__themes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
-			  `theme__JOIN__sprishop____themeTypes__reserved` varchar(85) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Theme',
-			  `type__JOIN__sprishop____sectionData__reserved` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Section',
+			  `theme__JOIN__sprishop____themeTypes__reserved` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Theme',
+			  `type__JOIN__sprishop____sectionData__reserved` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Section',
 			  `number` int(11) NOT NULL COMMENT 'Item number in section table'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Items to be added to thematic groupings';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Items to be added to thematic groupings';
 			
 			CREATE TABLE `__themeTypes` (
-			  `id` varchar(85) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
-			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name',
-			  `singular` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
-			  `plural` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
-			  `description` text COLLATE utf8_unicode_ci
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Available themes';
+			  `id` varchar(85) COLLATE utf8mb4_unicode_ci PRIMARY KEY NOT NULL,
+			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name',
+			  `singular` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `description` text COLLATE utf8mb4_unicode_ci
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Available themes';
 			
 			CREATE TABLE `__variationHeadings` (
-			  `columnName` varchar(255) COLLATE utf8_unicode_ci PRIMARY KEY NOT NULL,
-			  `englishNameOrNull` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Variation headings';
+			  `columnName` varchar(191) COLLATE utf8mb4_unicode_ci PRIMARY KEY NOT NULL,
+			  `englishNameOrNull` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Variation headings';
 		;";
 		
 		if ($this->settings['enableShoppingCart']) {
 			$sql .= "
 				CREATE TABLE `shoppingcart` (
 				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
-				  `session` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'User session number',
-				  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Shop product provider',
-				  `item` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Item number',
+				  `session` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'User session number',
+				  `provider` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Shop product provider',
+				  `item` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Item number',
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Automatic timestamp',
-				  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'URL of item',
-				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of item',
-				  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Image of item',
+				  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL of item',
+				  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of item',
+				  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Image of item',
 				  `price` float(8,2) NOT NULL COMMENT 'Price each',
 				  `total` int(11) NOT NULL COMMENT 'Number of items required',
 				  `maximumAvailable` int(11) NOT NULL COMMENT 'Maxmimum number of items of this type available',
 				  `orderId` int(11) DEFAULT NULL COMMENT 'Order number'
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Shopping cart session information (do not edit)';
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart session information (do not edit)';
 				
 				CREATE TABLE `shoppingcartOrders` (
 				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Order no.',
-				  `collectionDetails` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Collection details',
-				  `comments` text COLLATE utf8_unicode_ci COMMENT 'Any other comments',
-				  `sundries` text COLLATE utf8_unicode_ci COMMENT 'Sundries (if any)',
-				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name',
-				  `address` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Address',
-				  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail address',
-				  `telephone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Telephone',
+				  `collectionDetails` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Collection details',
+				  `comments` text COLLATE utf8mb4_unicode_ci COMMENT 'Any other comments',
+				  `sundries` text COLLATE utf8mb4_unicode_ci COMMENT 'Sundries (if any)',
+				  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name',
+				  `address` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Address',
+				  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'E-mail address',
+				  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Telephone',
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				  `status` enum('unfinalised','finalised','shipped','returned','lost','ignore') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Status of order'
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Shopping cart inquiry form';
+				  `status` enum('unfinalised','finalised','shipped','returned','lost','ignore') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Status of order'
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart inquiry form';
 			;";
 		}
   		
