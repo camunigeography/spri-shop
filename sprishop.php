@@ -704,8 +704,7 @@ class sprishop extends frontControllerApplication
 		$selected = "{$this->baseUrl}/{$selected}/";
 		
 		# Create the list
-		pureContent::jumplistProcessor ();
-		$html = pureContent::htmlJumplist ($values, $selected, $this->baseUrl . '/', $name = 'jumplist', $parentTabLevel = 0, $class = 'ultimateform jumplist alignright', 'Go to:');
+		$html = application::htmlJumplist ($values, $selected, $this->baseUrl . '/', $name = 'jumplist', $parentTabLevel = 0, $class = 'ultimateform jumplist alignright', 'Go to:');
 		
 		# Return the HTML
 		return $html;
