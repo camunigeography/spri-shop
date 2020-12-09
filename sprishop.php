@@ -432,7 +432,7 @@ class sprishop extends frontControllerApplication
 			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `hide` tinyint DEFAULT NULL COMMENT 'Hide?'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Sections';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='* Product categories';
 			
 			CREATE TABLE `__themes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
