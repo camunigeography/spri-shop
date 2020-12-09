@@ -588,9 +588,13 @@ class sprishop extends frontControllerApplication
 		# Get the themes data
 		$themes = $this->getThemes ();
 		
-		# Merge in the themes data, with the sections taking priority, and re-alphabetising (this assumes that the keys and names have the same alphabetical orders)
+		# Merge in the themes data, with the sections taking priority
 		$sectionData += $themes;
-		ksort ($sectionData);
+		
+		# Re-alphabetise, maintaining keys
+		uasort ($sectionData, function ($a, $b) {
+			return strnatcmp ($a['title'], $b['title']);
+		});
 		
 		# Return the list
 		return $sectionData;
