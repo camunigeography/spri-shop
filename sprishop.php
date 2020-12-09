@@ -430,7 +430,8 @@ class sprishop extends frontControllerApplication
 			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title (on front page)',
 			  `singular` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `hide` tinyint DEFAULT NULL COMMENT 'Hide?'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Sections';
 			
 			CREATE TABLE `__themes` (
@@ -575,10 +576,11 @@ class sprishop extends frontControllerApplication
 	
 	
 	# Function to get the section metadata
+	#!# This needs to have filtering to remove anything in the droplist which has no items, e.g. /shop/shackleton/ has no items as of 27/Oct/2020
 	private function getSections ()
 	{
 		# Get the data
-		$sectionData = $this->databaseConnection->select ($this->settings['database'], '__sectionData', array (), array (), true, 'title');
+		$sectionData = $this->databaseConnection->select ($this->settings['database'], '__sectionData', array ('hide' => NULL), array (), true, 'title');
 		foreach ($sectionData as $section => $attributes) {
 			$sectionData[$section]['type'] = 'section';
 		}
