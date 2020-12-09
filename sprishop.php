@@ -1530,7 +1530,7 @@ class sprishop extends frontControllerApplication
 		# Define the properties, by table
 		$dataBindingAttributes = array (
 			'*' => array (
-				'photographFilename' => array ('directory' => $this->imageStoreRoot . "%table/", 'forcedFileName' => '%id', 'lowercaseExtension' => true, 'allowedExtensions' => array ('jpg')),
+				'photographFilename' => array ('directory' => $this->imageStoreRoot . '%table/', 'previewLocationPrefix' => $this->baseUrl . '/images/' . '%table/', 'forcedFileName' => '%id', 'lowercaseExtension' => true, 'allowedExtensions' => array ('jpg')),
 				'pricePerUnit' => array ('prepend' => '&pound; ', ),
 				'priceIncludesVat' => array ('title' => 'VAT included', 'values' => array ('Y' => 'Yes, standard-rated included in price above', 'N' => 'No - zero-rated')),
 				'colour' => array ('type' => 'select', ),
