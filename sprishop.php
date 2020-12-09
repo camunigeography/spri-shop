@@ -430,7 +430,6 @@ class sprishop extends frontControllerApplication
 			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Title (on front page)',
 			  `singular` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `hide` tinyint DEFAULT NULL COMMENT 'Hide?'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='* Product categories';
 			
