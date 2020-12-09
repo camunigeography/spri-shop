@@ -26,7 +26,6 @@ class sprishop extends frontControllerApplication
 			'div'							=> 'sprishop',
 			'administrators'				=> true,
 			'useEditing'					=> true,
-			'imageStoreRoot'				=> '/images/shop',
 			'sectionsImages'				=> '/_sections/',
 			'imageGenerationStub'			=> '/images/generator',
 			'showPublisherLinks'			=> true,
@@ -722,8 +721,9 @@ class sprishop extends frontControllerApplication
 		# Create the list
 		$items = array ();
 		foreach ($this->productTypes as $type => $description) {
-			$imageFile = "{$this->settings['imageStoreRoot']}{$this->settings['sectionsImages']}{$type}.jpg";
-			$imageHtml = (is_readable ($_SERVER['DOCUMENT_ROOT'] . $imageFile) ? "<img src=\"{$imageFile}\" alt=\"{$description}\">" : '<span class="blank"></span>');
+			$imageFile = "{$this->imageStoreRoot}{$this->settings['sectionsImages']}{$type}.jpg";
+			$imageFileLocation = str_replace ($_SERVER['DOCUMENT_ROOT'], '', $imageFile);
+			$imageHtml = (is_readable ($imageFile) ? "<img src=\"{$imageFileLocation}\" alt=\"{$description}\">" : '<span class="blank"></span>');
 			$items[] = "<a href=\"{$this->baseUrl}/{$type}/\">{$imageHtml} {$description}</a>";
 		}
 		$html = "\n" . application::htmlUl ($items, 0, 'categories');
@@ -1433,19 +1433,20 @@ class sprishop extends frontControllerApplication
 			
 			#!# Remove this switching code when all data migrated
 			if ($type == 'clothing') {$type = '_clothingTypes';}
-			$imagePath = $this->settings['imageStoreRoot'] . '/' . $type . '/' . $photographFilename;
-			if (is_readable ($_SERVER['DOCUMENT_ROOT'] . $imagePath)) {
+			$imageFile = $this->imageStoreRoot . $type . '/' . $photographFilename;
+			if (is_readable ($imageFile)) {
 				
 				# Determine the base size to scale to
 				$baseSize = $this->settings['imageResizeTo'];
 				
 				# Get its original size
-				list ($width, $height, $imageType, $imageAttributes) = getimagesize ($_SERVER['DOCUMENT_ROOT'] . $imagePath);
+				list ($width, $height, $imageType, $imageAttributes) = getimagesize ($imageFile);
 				
 				# Obtain the image height and width when scaled
 				list ($width, $height) = image::scaledImageDimensions ($width, $height, $baseSize);
 				
 				# Create the HTML
+				$imagePath = str_replace ($_SERVER['DOCUMENT_ROOT'], '', $imageFile);
 				$thumbnailImagePath = ($this->settings['imageGenerationStub'] ? "{$this->settings['imageGenerationStub']}?{$width}," : '') . $imagePath;
 				$imageHtml = '<img class="mainimage" src="' . $thumbnailImagePath . "\" alt=\"{$title}\" width=\"{$width}\" height=\"{$height}\" />";
 			}
@@ -1529,7 +1530,7 @@ class sprishop extends frontControllerApplication
 		# Define the properties, by table
 		$dataBindingAttributes = array (
 			'*' => array (
-				'photographFilename' => array ('directory' => $_SERVER['DOCUMENT_ROOT'] . $this->settings['imageStoreRoot'] . "/%table/", 'forcedFileName' => '%id', 'lowercaseExtension' => true, 'allowedExtensions' => array ('jpg')),
+				'photographFilename' => array ('directory' => $this->imageStoreRoot . "%table/", 'forcedFileName' => '%id', 'lowercaseExtension' => true, 'allowedExtensions' => array ('jpg')),
 				'pricePerUnit' => array ('prepend' => '&pound; ', ),
 				'priceIncludesVat' => array ('title' => 'VAT included', 'values' => array ('Y' => 'Yes, standard-rated included in price above', 'N' => 'No - zero-rated')),
 				'colour' => array ('type' => 'select', ),
