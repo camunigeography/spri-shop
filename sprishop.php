@@ -177,17 +177,17 @@ class sprishop extends frontControllerApplication
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `clothing` (
-			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `title__JOIN__sprishop___clothingTypes__reserved` int(11) NOT NULL,
-			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
-			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
-			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0',
-			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
-			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
-			  `size__JOIN__sprishop___sizes__reserved` int(11) DEFAULT NULL,
-			  `colour__JOIN__sprishop___colours__reserved` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL
+			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '#',
+			  `title__JOIN__sprishop___clothingTypes__reserved` int(11) NOT NULL COMMENT 'Title',
+			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00' COMMENT 'Price per unit',
+			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Price includes VAT?',
+			  `stockAvailable` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Stock available',
+			  `stockIdealLevel` int(10) UNSIGNED DEFAULT NULL COMMENT 'Stock ideal level',
+			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL COMMENT 'Stock minimum level',
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Visible?',
+			  `size__JOIN__sprishop___sizes__reserved` int(11) DEFAULT NULL COMMENT 'Size',
+			  `colour__JOIN__sprishop___colours__reserved` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Colour',
+			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL COMMENT 'Material'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `collectibles` (
@@ -372,11 +372,11 @@ class sprishop extends frontControllerApplication
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_clothingTypes` (
-			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `photographFilename` varchar(85) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-			  `title` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `descriptionLong` text COLLATE utf8mb4_unicode_ci
+			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '#',
+			  `photographFilename` varchar(85) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Photo',
+			  `title` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Title',
+			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Description',
+			  `descriptionLong` text COLLATE utf8mb4_unicode_ci COMMENT 'Long description'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_colours` (
