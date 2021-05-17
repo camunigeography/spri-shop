@@ -36,6 +36,8 @@
 #sprishop div.item p.publisher a:hover, #sprishop div.item p.price a:hover, #sprishop div.item p.stock a:hover {text-decoration: none;}
 #sprishop div.item p.price {font-weight: bold; color: #333;}
 #sprishop div.item span.vat {font-weight: normal; color: #bbb;}
+#sprishop div.item ul.purchase a {background-color: white;}
+#sprishop div.item ul.purchase a img {margin-right: 5px;}
 #sprishop #parameters {border-top: 0px solid #f7f7f7; margin: 0 0 25px; padding: 2px 0;}
 
 /* Pagination and order-by box */

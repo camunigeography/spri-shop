@@ -153,7 +153,8 @@ class sprishop extends frontControllerApplication
 			  `pages` int(11) DEFAULT NULL,
 			  `binding` enum('Hardback','Paperback') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Hardback',
 			  `edition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-			  `childrens` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N'
+			  `childrens` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `cards` (
@@ -173,7 +174,8 @@ class sprishop extends frontControllerApplication
 			  `sizeHeightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Blank',
 			  `colour` enum('Colour','Black & white','Unknown') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Colour',
-			  `numberPerPack` int(10) UNSIGNED NOT NULL DEFAULT '0'
+			  `numberPerPack` int(10) UNSIGNED NOT NULL DEFAULT '0',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `clothing` (
@@ -187,7 +189,8 @@ class sprishop extends frontControllerApplication
 			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Visible?',
 			  `size__JOIN__sprishop___sizes__reserved` int(11) DEFAULT NULL COMMENT 'Size',
 			  `colour__JOIN__sprishop___colours__reserved` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Colour',
-			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL COMMENT 'Material'
+			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL COMMENT 'Material',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `collectibles` (
@@ -203,7 +206,8 @@ class sprishop extends frontControllerApplication
 			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
 			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
-			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `jewellery` (
@@ -219,7 +223,8 @@ class sprishop extends frontControllerApplication
 			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
 			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
-			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			  `sizeInCm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `maps` (
@@ -243,6 +248,7 @@ class sprishop extends frontControllerApplication
 			  `sizeFoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeUnfoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeUnfoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `mugs` (
@@ -256,7 +262,8 @@ class sprishop extends frontControllerApplication
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `multimedia` (
@@ -280,7 +287,8 @@ class sprishop extends frontControllerApplication
 			  `publicationDate` date DEFAULT NULL,
 			  `lengthMinutes` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `technicalDetails` text COLLATE utf8mb4_unicode_ci,
-			  `isbn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			  `isbn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `posters` (
@@ -301,7 +309,8 @@ class sprishop extends frontControllerApplication
 			  `sizeWidthInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `sizeHeightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `publisher` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-			  `dateCreated` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			  `dateCreated` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stamps` (
@@ -315,7 +324,8 @@ class sprishop extends frontControllerApplication
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stationery` (
@@ -329,7 +339,8 @@ class sprishop extends frontControllerApplication
 			  `stockMinimumLevel` int(10) UNSIGNED DEFAULT NULL,
 			  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `descriptionLong` text COLLATE utf8mb4_unicode_ci,
-			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y'
+			  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `toys` (
@@ -347,7 +358,8 @@ class sprishop extends frontControllerApplication
 			  `heightInCm` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `relatedInstitution` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 			  `safety` text COLLATE utf8mb4_unicode_ci,
-			  `material` text COLLATE utf8mb4_unicode_ci
+			  `material` text COLLATE utf8mb4_unicode_ci,
+			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_authors` (
@@ -1259,6 +1271,7 @@ class sprishop extends frontControllerApplication
 		# Add a button to the longer description if there is one and not in single-item mode
 		if ($moreInfo) {$html .= "\n\t\t" . "<p class=\"moreinfo\">{$link['start']}More information ..{$link['end']}</p>";}
 		$html .= "\n\t</div>";
+		if ($item['externalPurchaseUrl']) {$html .= "\n<ul class=\"nobullet actions noprint purchase\">\n<li><a href=\"" . htmlspecialchars ($item['externalPurchaseUrl']) . "\" target=\"_blank\" class=\"noarrow\"><img src=\"/images/icons/basket.png\" class=\"icon\"> Purchase online</a></li>\n</ul>";}
 		if ($this->settings['enableShoppingCart']) {
 			if (!$multiselectComponents) {
 				$html .= $item['shoppingCartControlsHtml'];
