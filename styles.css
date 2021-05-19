@@ -51,6 +51,11 @@
 #sprishop p.pagination a.selected, #sprishop p.orderby a.selected {background-color: #bbb;}
 #sprishop p.pagination a:hover, #sprishop p.orderby a:hover {border-color: #6100c1; background-color: #f0e1ff; text-decoration: none;}
 
+/* Search */
+#productnavigation {height: 65px;}
+.largesearch {float: left; margin-bottom: 20px;}
+.largesearch input[type='search'] {color: #603; font-size: 1.2em; padding: 0.2em; padding: 5px;}
+
 /* Shopping cart */
 #sprishop div.item ul.actions {margin-top: 20px; margin-left: 0; float: none;}
 #sprishop table p.actions.right {margin-top: 10px; margin-left: 0;}

@@ -26,6 +26,7 @@ class sprishop extends frontControllerApplication
 			'div'							=> 'sprishop',
 			'administrators'				=> true,
 			'useEditing'					=> true,
+			'apiUsername'					=> true,	// No username
 			'sectionsImages'				=> '/_sections/',
 			'imageGenerationStub'			=> '/images/generator',
 			'showPublisherLinks'			=> true,
@@ -524,7 +525,11 @@ class sprishop extends frontControllerApplication
 		
 		# Show the droplist
 		if (isSet ($this->actions[$this->action]['droplist']) && $this->actions[$this->action]['droplist']) {
+			# Add a search box
+			echo "\n<div id=\"productnavigation\">";
+			echo $this->searchBox ();
 			echo $this->productTypeDroplist ();
+			echo "\n</div>";
 		}
 		
 		# Set the How to order text
@@ -834,7 +839,7 @@ class sprishop extends frontControllerApplication
 		
 		# Add tabs for this grouping if required
 		if ($grouping) {
-			$html .= "<br />" . $this->subtypesTabs ($grouping);
+			$html .= '<br />' . $this->subtypesTabs ($grouping);
 		}
 		
 		# Get the product data
@@ -1676,6 +1681,109 @@ class sprishop extends frontControllerApplication
 		
 		# Show the HTML
 		echo $html;
+	}
+	
+	
+	# Search box
+	private function searchBox ()
+	{
+		# Add libraries
+		$html  = "\n" . '<script src="//code.jquery.com/jquery.min.js"></script>';
+		$html .= "\n" . '<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>';
+		$html .= "\n" . '<link href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>';
+		
+		# Determine the search endpoint URL
+		$searchEndpoint = $this->baseUrl . '/api/search';
+		
+		# Add autocomplete, redirecting on select
+		$html .= "\n" . '<script type="text/javascript">
+			$ (function () {
+				$(\'#productsearch\').autocomplete ({
+					source: \'' . $searchEndpoint . '\',
+					delay: 0,
+					select: function (event, ui) {
+						window.location.href = ui.item.url;
+					}
+				});
+			});
+		</script>';
+		
+		# Form
+		$html .= "\n" . '<form class="largesearch">Search: <input type="search" name="productsearch" id="productsearch" size="30" placeholder="Search the catalogue&hellip;" /></form>';
+		
+		# Return the HTML
+		return $html;
+	}
+	
+	
+	# Search API
+	public function apiCall_search ()
+	{
+		# End if no query
+		if (!isSet ($_GET['term']) || !strlen ($_GET['term'])) {return array ();}
+		
+		# Assemble the query component for each type
+		$query = array ();
+		foreach ($this->sections as $type => $attributes) {
+			
+			# Skip themes, ensuring only real tables are used
+			if ($attributes['type'] != 'section') {continue;}
+			
+			# Determine query
+			switch ($type) {
+				
+				case 'books':
+					$query[] = "
+						SELECT
+							CONCAT('{$this->baseUrl}/{$type}/', subtypeUrlSlug, '.html#item', {$type}.id) AS url,
+							title AS label
+						FROM {$type}
+						LEFT JOIN _booksSubtypes ON grouping__JOIN__sprishop___booksSubtypes__reserved = _booksSubtypes.id
+						WHERE title LIKE :term OR authors LIKE :term
+						AND visible = 'Y'
+					";
+					break;
+					
+				case 'clothing':
+					$query[] = "
+						SELECT
+							CONCAT('{$this->baseUrl}/{$type}/#item', MAX(clothing.id)) AS url,
+							_clothingTypes.title AS label
+						FROM {$type}
+						LEFT JOIN _clothingTypes ON clothing.title__JOIN__sprishop___clothingTypes__reserved = _clothingTypes.id
+						WHERE title LIKE :term
+						AND visible = 'Y'
+						GROUP BY title
+					";
+					break;
+					
+				
+				default:
+					$query[] = "
+						SELECT
+							CONCAT('{$this->baseUrl}/{$type}/#item', id) AS url,
+							title AS label
+						FROM {$type}
+						WHERE title LIKE :term
+						AND visible = 'Y'
+					";
+			}
+		}
+		
+		# Assemble the query
+		$query = '(' . implode (') UNION (', $query) . ') LIMIT 10;';
+		
+		# Get the data
+		$preparedStatementValues = array ('term' => '%' . trim ($_GET['term']) . '%');
+		$results = $this->databaseConnection->getData ($query, false, true, $preparedStatementValues);
+		
+		# Truncate results
+		foreach ($results as $index => $result) {
+			$results[$index]['label'] = application::str_truncate ($result['label'], 60, false, $override = false, true, $htmlMode = false);
+		}
+		
+		# Return the results (which will become JSON)
+		return $results;
 	}
 }
 
