@@ -134,9 +134,7 @@ class sprishop extends frontControllerApplication
 			CREATE TABLE `books` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `grouping__JOIN__sprishop___booksSubtypes__reserved` int(11) DEFAULT NULL COMMENT 'Grouping',
-			  `author__JOIN__sprishop___authors__reserved` int(11) NOT NULL,
-			  `author2__JOIN__sprishop___authors__reserved` int(11) DEFAULT NULL,
-			  `author3__JOIN__sprishop___authors__reserved` int(11) DEFAULT NULL,
+			  `authors` VARCHAR(255) NOT NULL COMMENT 'Author(s)',
 			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `pricePerUnit` float(5,2) NOT NULL DEFAULT '0.00',
 			  `priceIncludesVat` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
@@ -360,12 +358,6 @@ class sprishop extends frontControllerApplication
 			  `safety` text COLLATE utf8mb4_unicode_ci,
 			  `material` text COLLATE utf8mb4_unicode_ci,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
-			
-			CREATE TABLE `_authors` (
-			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `forename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_booksSubtypes` (
@@ -1071,16 +1063,12 @@ class sprishop extends frontControllerApplication
 				$query = "
 					SELECT
 						{$type}.*,
-						_authors.id authorId, _authors.surname authorSurname, _authors.forename authorForename,
 						_publishers.name publisherName, _publishers.url publisherUrl,
 						books.id id
 					FROM books
-					LEFT OUTER JOIN _authors ON books.author__JOIN__sprishop___authors__reserved = _authors.id
-					/*LEFT OUTER JOIN _authors ON books.author2__JOIN__sprishop___authors__reserved = _authors.id*/
-					/*LEFT OUTER JOIN _authors ON books.author3__JOIN__sprishop___authors__reserved = _authors.id*/
 					LEFT OUTER JOIN _publishers ON books.publisher__JOIN__sprishop___publishers__reserved = _publishers.id
 					";
-				$orderbyTypes += array ('author' => 'author__JOIN__sprishop___authors__reserved', 'date' => 'publicationDate', 'publisher' => 'publisherName');
+				$orderbyTypes += array ('authors' => 'authors', 'date' => 'publicationDate', 'publisher' => 'publisherName');	// Ordering by author will not give a sensible result, as these are strings with forename first
 				break;
 			case 'cards':
 				$query = "
@@ -1259,7 +1247,7 @@ class sprishop extends frontControllerApplication
 		$html .= "\n\t<h2>" . ($moreInfo ? $link['start'] . $item['title'] . $link['end'] : $item['title']) . '</h2>';
 		if (!is_array ($item['photographFilename'])) {$html .= "\n\t" . $item['photographFilename'];}
 		$html .= "\n\t<div class=\"info\">";
-		if (isSet ($item['_author'])) {$html .= "\n\t\t<h4>By " . $item['_author'] . '</h4>';}
+		if (isSet ($item['authors'])) {$html .= "\n\t\t<h4>By " . htmlspecialchars ($item['authors']) . '</h4>';}
 		$html .= "\n\t\t" . application::formatTextBlock (application::makeClickableLinks ((($full && $item['descriptionLong']) ? (is_array ($item['descriptionLong']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['descriptionLong']) : (is_array ($item['description']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['description'])), false, false, $target = false), $paragraphClass = 'description');
 		$html .= $attributesHtml;
 		if (isSet ($item['publisherCompiled']) && ($item['publisherCompiled'])) {$html .= "\n\t\t<p class=\"publisher\">Published: " . (is_array ($item['publisherCompiled']) ? 'See options below' : "{$item['publisherCompiled']}") . '</p>';}
@@ -1292,12 +1280,6 @@ class sprishop extends frontControllerApplication
 		# Determine whether stock is available
 		$item['stockAvailableNumeric'] = $item['stockAvailable'];
 		$item['stockAvailable'] = ($item['stockAvailable'] ? 'In stock' : 'We regret this item is temporarily <strong>out of stock</strong>');
-		
-		# Construct the author's details where relevant
-		$authorDetails = '';
-		if (isSet ($item['authorForename'])) {
-			$item['_author']  = "{$item['authorForename']} {$item['authorSurname']}";
-		}
 		
 		# Combine the VAT indicator into the price
 		$item['pricePerUnitFormatted'] = $item['pricePerUnit'];
