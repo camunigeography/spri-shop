@@ -365,9 +365,7 @@ class sprishop extends frontControllerApplication
 			CREATE TABLE `_authors` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `forname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `dateOfBirth` date DEFAULT NULL,
-			  `dateOfDeath` date DEFAULT NULL
+			  `forname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_booksSubtypes` (
@@ -1073,7 +1071,7 @@ class sprishop extends frontControllerApplication
 				$query = "
 					SELECT
 						{$type}.*,
-						_authors.id authorId, _authors.surname authorSurname, _authors.forname authorForename, _authors.dateOfBirth authorDateOfBirth, _authors.dateOfDeath authorDateOfDeath, 
+						_authors.id authorId, _authors.surname authorSurname, _authors.forname authorForename,
 						_publishers.name publisherName, _publishers.url publisherUrl,
 						books.id id
 					FROM books
@@ -1299,9 +1297,6 @@ class sprishop extends frontControllerApplication
 		$authorDetails = '';
 		if (isSet ($item['authorForename'])) {
 			$item['_author']  = "{$item['authorForename']} {$item['authorSurname']}";
-			#!# Add date and time
-			# $authorDetails .= timedate::formatDate ($item['authorDateOfBirth']);
-			# $authorDetails .= timedate::dateBirthDeath ($item['authorDateOfBirth'], $item['authorDateOfDeath']);
 		}
 		
 		# Combine the VAT indicator into the price
