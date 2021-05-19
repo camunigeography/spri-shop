@@ -1084,7 +1084,8 @@ class sprishop extends frontControllerApplication
 						_clothingTypes.title AS title, _clothingTypes.photographFilename, _clothingTypes.description, _clothingTypes.descriptionLong,
 						_colours.hexCode hexCode, _colours.commonName colour,
 						_sizes.name size,
-						_materials.name material
+						_materials.name material,
+						externalPurchaseUrl
 					FROM {$type}
 					LEFT OUTER JOIN sprishop._clothingTypes ON {$type}.title__JOIN__sprishop___clothingTypes__reserved = _clothingTypes.id
 					LEFT OUTER JOIN sprishop._sizes ON {$type}.size__JOIN__sprishop___sizes__reserved = _sizes.id
