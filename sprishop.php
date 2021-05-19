@@ -365,7 +365,7 @@ class sprishop extends frontControllerApplication
 			CREATE TABLE `_authors` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `forname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+			  `forename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_booksSubtypes` (
@@ -1071,7 +1071,7 @@ class sprishop extends frontControllerApplication
 				$query = "
 					SELECT
 						{$type}.*,
-						_authors.id authorId, _authors.surname authorSurname, _authors.forname authorForename,
+						_authors.id authorId, _authors.surname authorSurname, _authors.forename authorForename,
 						_publishers.name publisherName, _publishers.url publisherUrl,
 						books.id id
 					FROM books
