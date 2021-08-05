@@ -9,6 +9,12 @@
 
 <Macro MacroSpriShop $applicationBaseUrl $description $includePath>
 	
+	# Include path
+	<Location $applicationBaseUrl>
+		php_value include_path "$includePath"
+	</Location>
+	
+	# Front controller application support
 	Use MacroFrontControllerApplication "$applicationBaseUrl/" "$description"
 	
 	# Shop application
