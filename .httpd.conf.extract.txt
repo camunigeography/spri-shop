@@ -7,44 +7,44 @@
 #   Use MacroSpriShop "/shop" "SPRI shop" "/path/to/sprishop/:/path/to/php/libraries/"
 
 
-<Macro MacroSpriShop $applicationBaseUrl $description $includePath>
+<Macro MacroSpriShop $baseUrl $description $includePath>
 	
 	# Include path
-	<Location $applicationBaseUrl>
+	<Location $baseUrl>
 		php_value include_path "$includePath"
 	</Location>
 	
 	# Front controller application support
-	Use MacroFrontControllerApplication "$applicationBaseUrl/" "$description"
+	Use MacroFrontControllerApplication "$baseUrl/" "$description"
 	
 	# Shop application
-	<Location $applicationBaseUrl/>
+	<Location $baseUrl/>
 		php_admin_value output_buffering 32768
 		AAAlwaysDecode On
 	</Location>
 	
 	# Editing
-	Use MacroSinenomineEmbeddedWholeDb "$applicationBaseUrl" "/data" "editing"
+	Use MacroSinenomineEmbeddedWholeDb "$baseUrl" "/data" "editing"
 	
 	# Shopping cart
-	RewriteRule ^$applicationBaseUrl/(basket|checkout|orders|callback)/$ $applicationBaseUrl/index.html?action=$1 [L]
-	RewriteRule ^$applicationBaseUrl/(basket|checkout|orders|callback)$ $applicationBaseUrl/$1/ [L,R]
-	RewriteRule ^$applicationBaseUrl/(orders)/([1-9][0-9]*)/$ $applicationBaseUrl/index.html?action=$1&item=$2 [L]
-	RewriteRule ^$applicationBaseUrl/(orders)/([1-9][0-9]*)$ $applicationBaseUrl/$1/$2/ [L,R]
+	RewriteRule ^$baseUrl/(basket|checkout|orders|callback)/$ $baseUrl/index.html?action=$1 [L]
+	RewriteRule ^$baseUrl/(basket|checkout|orders|callback)$ $baseUrl/$1/ [L,R]
+	RewriteRule ^$baseUrl/(orders)/([1-9][0-9]*)/$ $baseUrl/index.html?action=$1&item=$2 [L]
+	RewriteRule ^$baseUrl/(orders)/([1-9][0-9]*)$ $baseUrl/$1/$2/ [L,R]
 	
 	# Old shop URLs
-	RewriteRule ^$applicationBaseUrl/education/? http://www.spri.cam.ac.uk$applicationBaseUrl/books/youngreaders.html [L,R=301]
+	RewriteRule ^$baseUrl/education/? http://www.spri.cam.ac.uk$baseUrl/books/youngreaders.html [L,R=301]
 	
 	# Main shop URLs
-	RewriteRule ^$applicationBaseUrl/ordering/$ $applicationBaseUrl/index.html?action=ordering [L]
-	RewriteRule ^$applicationBaseUrl/([^/]+)(/|/index.html)$ $applicationBaseUrl/index.html?action=listing&type=$1
-	RedirectMatch Permanent ^$applicationBaseUrl/([a-z]+)$ http://www.spri.cam.ac.uk$applicationBaseUrl/$1/
-	RewriteRule ^$applicationBaseUrl/([^/]+)/([a-z]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&grouping=$2
-	RewriteRule ^$applicationBaseUrl/([^/]+)/([0-9]+)/$ $applicationBaseUrl/index.html?action=listing&type=$1&id=$2
-	RedirectMatch Permanent ^$applicationBaseUrl/([a-z]+)/([0-9]+)$ http://www.spri.cam.ac.uk$applicationBaseUrl/$1/$2/
-	RewriteRule ^$applicationBaseUrl/([^/]+)/page([^.]+)-([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&page=$2&orderby=$3
-	RewriteRule ^$applicationBaseUrl/([^/]+)/page([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&page=$2
-	RewriteRule ^$applicationBaseUrl/([^/]+)/-([^.]+).html$ $applicationBaseUrl/index.html?action=listing&type=$1&orderby=$2
-	RewriteRule ^$applicationBaseUrl/(stocklist).(html|csv)$ $applicationBaseUrl/index.html?action=$1&format=$2
+	RewriteRule ^$baseUrl/ordering/$ $baseUrl/index.html?action=ordering [L]
+	RewriteRule ^$baseUrl/([^/]+)(/|/index.html)$ $baseUrl/index.html?action=listing&type=$1
+	RedirectMatch Permanent ^$baseUrl/([a-z]+)$ http://www.spri.cam.ac.uk$baseUrl/$1/
+	RewriteRule ^$baseUrl/([^/]+)/([a-z]+).html$ $baseUrl/index.html?action=listing&type=$1&grouping=$2
+	RewriteRule ^$baseUrl/([^/]+)/([0-9]+)/$ $baseUrl/index.html?action=listing&type=$1&id=$2
+	RedirectMatch Permanent ^$baseUrl/([a-z]+)/([0-9]+)$ http://www.spri.cam.ac.uk$baseUrl/$1/$2/
+	RewriteRule ^$baseUrl/([^/]+)/page([^.]+)-([^.]+).html$ $baseUrl/index.html?action=listing&type=$1&page=$2&orderby=$3
+	RewriteRule ^$baseUrl/([^/]+)/page([^.]+).html$ $baseUrl/index.html?action=listing&type=$1&page=$2
+	RewriteRule ^$baseUrl/([^/]+)/-([^.]+).html$ $baseUrl/index.html?action=listing&type=$1&orderby=$2
+	RewriteRule ^$baseUrl/(stocklist).(html|csv)$ $baseUrl/index.html?action=$1&format=$2
 	
 </Macro>
