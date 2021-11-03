@@ -415,7 +415,7 @@ class sprishop extends frontControllerApplication
 			
 			CREATE TABLE `__announcement` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
-			  `announcementText` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Accouncement text',
+			  `announcementText` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Announcement text',
 			  `startDate` date NOT NULL,
 			  `endDate` date NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Announcement';
