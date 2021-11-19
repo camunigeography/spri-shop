@@ -34,12 +34,6 @@ class sprishop extends frontControllerApplication
 			'tabUlClass'					=> 'tabsflat',
 			'enableShoppingCart'			=> false,
 			'enablePaymentWorkflow'			=> true,
-			'shoppingCartPaymentUrl'		=> false,
-			'shoppingCartSharedSecret'		=> false,
-			'shoppingCartClientId'			=> false,
-			'shoppingCartOrderPrefix'		=> false,
-			'shoppingCartVatCode'			=> false,
-			'shoppingCartOrderDescription'	=> 'Payment for online shop order no. %s',	// %s can be used to state the order number
 		);
 		
 		# Return the defaults
@@ -129,7 +123,14 @@ class sprishop extends frontControllerApplication
 			  `id` int(11) PRIMARY KEY NOT NULL COMMENT 'Automatic key (ignored)',
 			  `feedbackRecipient` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Feedback recipient e-mail',
 			  `introductionHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Introductory text',
-			  `orderingHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ordering page'
+			  `orderingHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ordering page',
+			  `enableShoppingCart` TINYINT NULL COMMENT 'Enable shopping cart?',
+			  `shoppingCartPaymentUrl` VARCHAR(255) NULL COMMENT 'Shopping cart payment URL',
+			  `shoppingCartSharedSecret` VARCHAR(255) NULL COMMENT 'Shopping cart shared secret',
+			  `shoppingCartClientId` VARCHAR(255) NULL COMMENT 'Shopping cart client ID',
+			  `shoppingCartOrderPrefix` VARCHAR(255) NULL COMMENT 'Shopping cart order prefix',
+			  `shoppingCartVatCode` VARCHAR(255) NULL COMMENT 'Shopping cart VAT code',
+			  `shoppingCartOrderDescription` VARCHAR(255) NULL COMMENT 'Shopping cart order description (use %s for ID)'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `books` (
@@ -1547,6 +1548,7 @@ class sprishop extends frontControllerApplication
 				'feedbackRecipient' => array ('heading' => array (3 => 'General settings'), ),
 				'introductionHtml' => array ('editorToolbarSet' => 'BasicLonger', 'width' => '550', 'height' => 150, 'heading' => array (3 => 'Page texts'), ),
 				'orderingHtml' => array ('editorToolbarSet' => 'BasicLonger'),
+				'enableShoppingCart' => array ('heading' => array (3 => 'Shopping cart'), ),
 			),
 		);
 		
