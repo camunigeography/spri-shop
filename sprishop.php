@@ -1544,7 +1544,8 @@ class sprishop extends frontControllerApplication
 		# Define overrides
 		$dataBindingSettingsOverrides = array (
 			'attributes' => array (
-				'introductionHtml' => array ('editorToolbarSet' => 'BasicLonger', 'width' => '650', 'height' => 150),
+				'feedbackRecipient' => array ('heading' => array (3 => 'General settings'), ),
+				'introductionHtml' => array ('editorToolbarSet' => 'BasicLonger', 'width' => '550', 'height' => 150, 'heading' => array (3 => 'Page texts'), ),
 				'orderingHtml' => array ('editorToolbarSet' => 'BasicLonger'),
 			),
 		);
