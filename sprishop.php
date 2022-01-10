@@ -448,7 +448,8 @@ class sprishop extends frontControllerApplication
 			  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name',
 			  `singular` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
 			  `plural` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
-			  `description` text COLLATE utf8mb4_unicode_ci
+			  `description` text COLLATE utf8mb4_unicode_ci,
+			  `enabled` ENUM('Yes','No') NOT NULL DEFAULT 'Yes' COMMENT 'Enabled?'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Available themes';
 			
 			CREATE TABLE `__variationHeadings` (
@@ -617,6 +618,7 @@ class sprishop extends frontControllerApplication
 				'theme' AS type
 			FROM sprishop.__themes
 			LEFT JOIN __themeTypes ON theme__JOIN__sprishop____themeTypes__reserved = __themeTypes.id
+			WHERE enabled = 'Yes'
 			GROUP BY theme
 		;";
 		if (!$data = $this->databaseConnection->getData ($query, 'sprishop.__themes')) {
