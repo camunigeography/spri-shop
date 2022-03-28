@@ -32,7 +32,7 @@ class sprishop extends frontControllerApplication
 			'showPublisherLinks'			=> true,
 			'imageResizeTo'					=> 200,
 			'tabUlClass'					=> 'tabsflat',
-			'enableShoppingCart'			=> false,
+			'enableShoppingCart'			=> 'No',
 			'enablePaymentWorkflow'			=> true,
 		);
 		
@@ -70,19 +70,19 @@ class sprishop extends frontControllerApplication
 				'tab' => 'Basket',
 				'icon' => 'basket',
 				'url' => 'basket/',
-				'enableIf' => $this->settings['enableShoppingCart'],
+				'enableIf' => $this->enableShoppingCart,
 			),
 			'checkout' => array (
 				'description' => 'Checkout',
 				'usetab' => 'basket',
 				'url' => 'checkout/',
-				'enableIf' => $this->settings['enableShoppingCart'],
+				'enableIf' => $this->enableShoppingCart,
 			),
 			'callback' => array (
 				'description' => false,
 				'usetab' => 'basket',
 				'url' => 'callback/',
-				'enableIf' => $this->settings['enableShoppingCart'],
+				'enableIf' => $this->enableShoppingCart,
 			),
 			'orders' => array (
 				'description' => false,
@@ -90,7 +90,7 @@ class sprishop extends frontControllerApplication
 				'icon' => 'wand',
 				'url' => 'orders/',
 				'administrator' => true,
-				'enableIf' => $this->settings['enableShoppingCart'],
+				'enableIf' => $this->enableShoppingCart,
 			),
 			'stocklist' => array (
 				'description' => 'Stock list',
@@ -124,7 +124,7 @@ class sprishop extends frontControllerApplication
 			  `feedbackRecipient` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Feedback recipient e-mail',
 			  `introductionHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Introductory text',
 			  `orderingHtml` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ordering page',
-			  `enableShoppingCart` TINYINT NULL COMMENT 'Enable shopping cart?',
+			  `enableShoppingCart` ENUM('No','Admins only','Yes') NOT NULL DEFAULT 'No' COMMENT 'Enable shopping cart?',
 			  `shoppingCartPaymentUrl` VARCHAR(255) NULL COMMENT 'Shopping cart payment URL',
 			  `shoppingCartSharedSecret` VARCHAR(255) NULL COMMENT 'Shopping cart shared secret',
 			  `shoppingCartClientId` VARCHAR(255) NULL COMMENT 'Shopping cart client ID',
@@ -458,7 +458,7 @@ class sprishop extends frontControllerApplication
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Variation headings';
 		;";
 		
-		if ($this->settings['enableShoppingCart']) {
+		if ($this->enableShoppingCart) {
 			$sql .= "
 				CREATE TABLE `shoppingcart` (
 				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
@@ -503,6 +503,9 @@ class sprishop extends frontControllerApplication
 			$this->settings['disableTabs'] = false;
 		}
 		
+		# Determine whether to enable the shopping cart
+		$this->enableShoppingCart = ($this->settings['enableShoppingCart'] == 'Yes' || ($this->settings['enableShoppingCart'] == 'Admins only' && $this->userIsAdministrator));
+		
 	}
 	
 	
@@ -543,7 +546,7 @@ class sprishop extends frontControllerApplication
 		}
 		
 		# Load the shopping cart library with the specified settings
-		if ($this->settings['enableShoppingCart']) {
+		if ($this->enableShoppingCart) {
 			$shoppingCartSettings = array (
 				'name'					=> $this->settings['applicationName'],
 				'provider'				=> __CLASS__,
@@ -885,7 +888,7 @@ class sprishop extends frontControllerApplication
 			}
 			
 			# Add the shopping cart controls
-			if ($this->settings['enableShoppingCart']) {
+			if ($this->enableShoppingCart) {
 				foreach ($data as &$item) {
 					#!# When groupByTitle is applied, each $item['fragment'] after the first in the group needs to be rewritten to be the first, so that the after-posting redirect position is correct
 					$item['shoppingCartControlsHtml'] = $this->shoppingCart->controls ($item['id'], $this->baseUrl . $item['fragment'], $item['title'], $item['pricePerUnit'], $item['priceIncludesVat'], $item['photographPath'], $item['stockAvailableNumeric'], false);
@@ -1267,7 +1270,7 @@ class sprishop extends frontControllerApplication
 		if ($moreInfo) {$html .= "\n\t\t" . "<p class=\"moreinfo\">{$link['start']}More information ..{$link['end']}</p>";}
 		$html .= "\n\t</div>";
 		if ($item['externalPurchaseUrl']) {$html .= "\n<ul class=\"nobullet actions noprint purchase\">\n<li><a href=\"" . htmlspecialchars ($item['externalPurchaseUrl']) . "\" target=\"_blank\" class=\"noarrow\"><img src=\"/images/icons/basket.png\" class=\"icon\"> Purchase online</a></li>\n</ul>";}
-		if ($this->settings['enableShoppingCart']) {
+		if ($this->enableShoppingCart) {
 			if (!$multiselectComponents) {
 				$html .= $item['shoppingCartControlsHtml'];
 			}
@@ -1399,7 +1402,7 @@ class sprishop extends frontControllerApplication
 				$multiselectComponents[$key]['Price each'] = $temporary;
 				
 				# Move the shoppingCartControlsHtml to the end
-				if ($this->settings['enableShoppingCart']) {
+				if ($this->enableShoppingCart) {
 					$temporary = $multiselectComponents[$key]['shoppingCartControlsHtml'];
 					unset ($multiselectComponents[$key]['shoppingCartControlsHtml']);
 					$multiselectComponents[$key]['shoppingCartControlsHtml'] = $temporary;
@@ -1409,7 +1412,7 @@ class sprishop extends frontControllerApplication
 		
 		# Set labels
 		$labels = array ();
-		if ($this->settings['enableShoppingCart']) {
+		if ($this->enableShoppingCart) {
 			$labels['shoppingCartControlsHtml'] = '';
 		}
 		
