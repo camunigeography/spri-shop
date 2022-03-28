@@ -47,4 +47,10 @@
 	RewriteRule ^$baseUrl/([^/]+)/-([^.]+).html$ $baseUrl/index.html?action=listing&type=$1&orderby=$2
 	RewriteRule ^$baseUrl/(stocklist).(html|csv)$ $baseUrl/index.html?action=$1&format=$2
 	
+	# Data URLs
+	<Location $baseUrl/callback/>
+		php_value auto_prepend_file none
+		php_value auto_append_file none
+	</Location>
+	
 </Macro>

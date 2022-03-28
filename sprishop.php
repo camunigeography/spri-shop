@@ -33,7 +33,7 @@ class sprishop extends frontControllerApplication
 			'imageResizeTo'					=> 200,
 			'tabUlClass'					=> 'tabsflat',
 			'enableShoppingCart'			=> 'No',
-			'enablePaymentWorkflow'			=> true,
+			'enablePaymentWorkflow'			=> true,	// When cart enabled
 			'useTemplating'					=> true,	// Currently only used by shopping cart; has to be enabled earlier to enable editing UI
 		);
 		
@@ -84,6 +84,7 @@ class sprishop extends frontControllerApplication
 				'usetab' => 'basket',
 				'url' => 'callback/',
 				'enableIf' => $this->enableShoppingCart,
+				'export' => true,
 			),
 			'orders' => array (
 				'description' => false,
@@ -508,7 +509,10 @@ class sprishop extends frontControllerApplication
 		}
 		
 		# Determine whether to enable the shopping cart
-		$this->enableShoppingCart = ($this->settings['enableShoppingCart'] == 'Yes' || ($this->settings['enableShoppingCart'] == 'Admins only' && $this->userIsAdministrator));
+		$this->enableShoppingCart = false;
+		if ($this->settings['enableShoppingCart'] == 'Yes') {$this->enableShoppingCart = true;}
+		if ($this->settings['enableShoppingCart'] == 'Admins only' && $this->userIsAdministrator) {$this->enableShoppingCart = true;}
+		if ($this->settings['enableShoppingCart'] != 'No' && $this->action == 'callback') {$this->enableShoppingCart = true;}
 		
 	}
 	
