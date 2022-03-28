@@ -33,11 +33,10 @@
 		<div id="content">
 			
 			
-			
 			<h2>Your order from the SPRI Shop</h2>
 			<p><strong>Thank you for your order.</strong></p>
 			<p>You will separately receive a payment confirmation from our secure payment merchant.</p>
-			<p>Details of the order are as follows. Please <a href="https://www.spri.cam.ac.uk/contacts/">contact us</a> if you have any questions.</p>
+			<p>Details of the order are as follows. Please <a href="{$siteUrl}{$baseUrl}/feedback.html">contact us</a> if you have any questions.</p>
 			
 			<h2>Order summary</h2>
 			
