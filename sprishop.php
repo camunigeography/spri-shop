@@ -568,6 +568,7 @@ class sprishop extends frontControllerApplication
 				'orderPrefix'			=> $this->settings['shoppingCartOrderPrefix'],
 				'vatCode'				=> $this->settings['shoppingCartVatCode'],
 				'orderDescription'		=> $this->settings['shoppingCartOrderDescription'],
+				'emailTemplate'			=> $this->applicationRoot . '/app/views/email.tpl',		// Smarty template format
 			);
 			require_once ('shoppingCart.php');
 			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings, $userData = array (), $this->userIsAdministrator, $this->user);
