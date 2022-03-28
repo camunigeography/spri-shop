@@ -557,6 +557,7 @@ class sprishop extends frontControllerApplication
 		if ($this->enableShoppingCart) {
 			$shoppingCartSettings = array (
 				'name'					=> $this->settings['applicationName'],
+				'administratorEmail'	=> $this->settings['administratorEmail'],
 				'provider'				=> __CLASS__,
 				'database'				=> $this->settings['database'],		// Shop database
 				'administrators'		=> $this->administrators,
