@@ -4,7 +4,7 @@
 #   
 #   # Assessments
 #   Include /path/to/sprishop/.httpd.conf.extract.txt
-#   Use MacroSpriShop "/shop" "SPRI shop" "/path/to/sprishop/:/path/to/php/libraries/"
+#   Use MacroSpriShop "/shop" "SPRI shop" "/path/to/sprishop/:/path/to/smarty/:/path/to/php/libraries/"
 
 
 <Macro MacroSpriShop $baseUrl $description $includePath>

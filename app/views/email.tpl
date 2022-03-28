@@ -9,6 +9,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 		
 		<style type="text/css">
+		{literal}
 			body {background-color: #e7f6fb; background-image: url('https://www.spri.cam.ac.uk/centenary/background.jpg'); background-repeat: no-repeat;}
 			body {font-family: 'Open Sans', verdana, arial, sans-serif; font-size: 0.9em;}
 			#content {width: 80%; margin: 10px auto; background-color: #fdfeff; padding: 10px 30px;}
@@ -25,6 +26,7 @@
 			table.lines td:last-child ul:first-child li:first-child {margin-top: 0;}
 			table th.background, table td.background {background-color: #eee;}
 			table th.border, table td.border {border: 1px solid gray;}
+		{/literal}
 		</style>
 	</head>
 	<body style="background-color: #e7f6fb;">
@@ -39,49 +41,44 @@
 			
 			<h2>Order summary</h2>
 			
-			<p>Order no.: <strong>59</strong>.</p>
-			<p>Total paid: <strong>&pound;0.90</strong> (+ <strong>&pound;5.00</strong> postage)</p>
-			<p>Expected delivery date: <span style="color: red;"><strong>???</strong></span></p>
+			<p>Order no.: <strong>{$id}</strong>.</p>
+			<p>Total paid: <strong>&pound;{$amount}</strong> (+ <strong>&pound;{$postage}</strong> postage)</p>
+			<p>Expected delivery date: <strong>{$deliveryDate}</strong></p>
 			
 			<table class="lines">
 				<tr>
 					<th class="image"></th>
 					<th class="item">Item</th>
-					<th class="price">Value</th>
+					<th class="price">Price</th>
 					<th class="number">Number</th>
 				</tr>
+				{foreach from=$order item=item}
 				<tr>
-					<td class="image key"><a href="https://www.spri.cam.ac.uk/shop/cards/#item15"><img border="0" src="https://www.spri.cam.ac.uk/images/shop/cards/single12.jpg" alt="Adelie penguins nesting in a box" align="right" width="150" width="107" /></a></td>
-					<td class="item">Adelie penguins nesting in a box</td>
-					<td class="price">&pound;0.45</td>
-					<td class="number">1</td>
+					<td class="image key"><a href="{$siteUrl}{$item.url}"><img src="{$siteUrl}{$item.image}" alt="{$item.name|htmlspecialchars}" align="right" width="100" border="0" /></a></td>
+					<td class="item">{$item.name|htmlspecialchars}</td>
+					<td class="price">&pound;{$item.price}</td>
+					<td class="number">{$item.total}</td>
 				</tr>
-				<tr>
-					<td class="image key"><a href="https://www.spri.cam.ac.uk/shop/cards/#item18"><img border="0" src="https://www.spri.cam.ac.uk/images/shop/cards/single13.jpg" alt="Captain Scott's Expedition at the South Pole" align="right" width="150" width="106" /></a></td>
-					<td class="item">Captain Scott's Expedition at the South Pole</td>
-					<td class="price">&pound;0.45</td>
-					<td class="number">1</td>
-				</tr>
+				{/foreach}
 			</table>
 			
 			
 			<h2>Your delivery details</h2>
 			
 			<p>Name:<br />
-			Jane Smith</p>
+			{$forename|htmlspecialchars} {$surname|htmlspecialchars}</p>
 			
 			<p>Address:<br />
-			Scott Polar Research Institute<br />
-			Lensfield Road</p>
+			{$address|htmlspecialchars|nl2br}</p>
 			
 			<p>Postcode:<br />
-			CB2 1ER</p>
+			{$postcode|htmlspecialchars}</p>
 			
 			<p>E-mail address:<br />
-			spqr1@example.com</p>
+			{$email|htmlspecialchars}</p>
 			
 			<p>Telephone:<br />
-			-</p>
+			{$telephone|htmlspecialchars}</p>
 			
 			
 		</div>

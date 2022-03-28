@@ -34,6 +34,7 @@ class sprishop extends frontControllerApplication
 			'tabUlClass'					=> 'tabsflat',
 			'enableShoppingCart'			=> 'No',
 			'enablePaymentWorkflow'			=> true,
+			'useTemplating'					=> true,	// Currently only used by shopping cart; has to be enabled earlier to enable editing UI
 		);
 		
 		# Return the defaults
@@ -571,7 +572,7 @@ class sprishop extends frontControllerApplication
 				'emailTemplate'			=> $this->applicationRoot . '/app/views/email.tpl',		// Smarty template format
 			);
 			require_once ('shoppingCart.php');
-			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings, $userData = array (), $this->userIsAdministrator, $this->user);
+			$this->shoppingCart = new shoppingCart ($this->databaseConnection, $this->baseUrl, $shoppingCartSettings, $userData = array (), $this->userIsAdministrator, $this->user, $this->templateHandle);
 		}
 	}
 	
