@@ -119,7 +119,7 @@ class sprishop extends frontControllerApplication
 			  `active` enum('','Yes','No') NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?',
 			  `privilege` enum('Administrator','Restricted administrator') NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level',
 			  `state` varchar(255) NULL COMMENT 'Headings expanded'
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='System administrators';
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='System administrators';
 			
 			CREATE TABLE `settings` (
 			  `id` int(11) PRIMARY KEY NOT NULL COMMENT 'Automatic key (ignored)',
@@ -136,7 +136,7 @@ class sprishop extends frontControllerApplication
 			  `shoppingCartOrderPrefix` VARCHAR(255) NULL COMMENT 'Shopping cart order prefix',
 			  `shoppingCartVatCode` VARCHAR(255) NULL COMMENT 'Shopping cart VAT code',
 			  `shoppingCartOrderDescription` VARCHAR(255) NULL COMMENT 'Shopping cart order description (use %s for ID)'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Settings';
 			
 			CREATE TABLE `books` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -160,7 +160,7 @@ class sprishop extends frontControllerApplication
 			  `edition` varchar(255) DEFAULT NULL,
 			  `childrens` enum('N','Y') NOT NULL DEFAULT 'N',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `cards` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -181,7 +181,7 @@ class sprishop extends frontControllerApplication
 			  `colour` enum('Colour','Black & white','Unknown') NOT NULL DEFAULT 'Colour',
 			  `numberPerPack` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `clothing` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '#',
@@ -196,7 +196,7 @@ class sprishop extends frontControllerApplication
 			  `colour__JOIN__sprishop___colours__reserved` varchar(255) DEFAULT NULL COMMENT 'Colour',
 			  `material__JOIN__sprishop___materials__reserved` int(11) DEFAULT NULL COMMENT 'Material',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `collectibles` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -213,7 +213,7 @@ class sprishop extends frontControllerApplication
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
 			  `sizeInCm` varchar(255) DEFAULT NULL,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `jewellery` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -230,7 +230,7 @@ class sprishop extends frontControllerApplication
 			  `type__JOIN__sprishop___jewelleryTypes__reserved` int(11) DEFAULT NULL,
 			  `sizeInCm` varchar(255) DEFAULT NULL,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `maps` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -254,7 +254,7 @@ class sprishop extends frontControllerApplication
 			  `sizeUnfoldedHeightInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `sizeUnfoldedWidthInCm` DECIMAL(5,1) UNSIGNED NULL DEFAULT NULL,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `mugs` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -269,7 +269,7 @@ class sprishop extends frontControllerApplication
 			  `descriptionLong` text,
 			  `visible` enum('N','Y') NOT NULL DEFAULT 'Y',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `multimedia` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -294,7 +294,7 @@ class sprishop extends frontControllerApplication
 			  `technicalDetails` text,
 			  `isbn` varchar(255) DEFAULT NULL,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `posters` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -316,7 +316,7 @@ class sprishop extends frontControllerApplication
 			  `publisher` varchar(255) DEFAULT NULL,
 			  `dateCreated` varchar(255) DEFAULT NULL,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stamps` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -331,7 +331,7 @@ class sprishop extends frontControllerApplication
 			  `descriptionLong` text,
 			  `visible` enum('N','Y') NOT NULL DEFAULT 'Y',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `stationery` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -346,7 +346,7 @@ class sprishop extends frontControllerApplication
 			  `descriptionLong` text,
 			  `visible` enum('N','Y') NOT NULL DEFAULT 'Y',
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `toys` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -365,7 +365,7 @@ class sprishop extends frontControllerApplication
 			  `safety` text,
 			  `material` text,
 			  `externalPurchaseUrl` VARCHAR(255) NULL COMMENT 'External purchasing link'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_booksSubtypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
@@ -373,12 +373,12 @@ class sprishop extends frontControllerApplication
 			  `subtypeUrlSlug` varchar(191) NOT NULL COMMENT 'URL key for this subtype',
 			  `featured__JOIN__sprishop__books__reserved` int(11) NOT NULL COMMENT 'Featured item',
 			  UNIQUE KEY `subtypeUrlSlug` (`subtypeUrlSlug`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Book subtypes';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Book subtypes';
 			
 			CREATE TABLE `_cardTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_clothingTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT '#',
@@ -386,52 +386,52 @@ class sprishop extends frontControllerApplication
 			  `title` varchar(85) NOT NULL DEFAULT '' COMMENT 'Title',
 			  `description` text NOT NULL COMMENT 'Description',
 			  `descriptionLong` text COMMENT 'Long description'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_colours` (
 			  `hexCode` varchar(6) PRIMARY KEY NOT NULL,
 			  `commonName` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_jewelleryTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_materials` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_multimediaTypes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_publishers` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL,
 			  `url` varchar(255) DEFAULT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `_sizes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `name` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			
 			CREATE TABLE `__announcement` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Unique key',
 			  `announcementText` varchar(255) NOT NULL COMMENT 'Announcement text',
 			  `startDate` date NOT NULL,
 			  `endDate` date NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Announcement';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Announcement';
 			
 			CREATE TABLE `__featured` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `section__JOIN__sprishop____sectionData__reserved` varchar(255) NOT NULL,
 			  `itemnumber` int(10) UNSIGNED NOT NULL DEFAULT '0',
 			  `priority` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Featured items';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Featured items';
 			
 			CREATE TABLE `__sectionData` (
 			  `id` varchar(85) PRIMARY KEY NOT NULL DEFAULT '',
@@ -439,14 +439,14 @@ class sprishop extends frontControllerApplication
 			  `singular` varchar(85) NOT NULL DEFAULT '',
 			  `plural` varchar(85) NOT NULL DEFAULT '',
 			  `hide` tinyint DEFAULT NULL COMMENT 'Hide?'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='* Product categories';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='* Product categories';
 			
 			CREATE TABLE `__themes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
 			  `theme__JOIN__sprishop____themeTypes__reserved` varchar(85) NOT NULL COMMENT 'Theme',
 			  `type__JOIN__sprishop____sectionData__reserved` varchar(64) NOT NULL COMMENT 'Section',
 			  `number` int(11) NOT NULL COMMENT 'Item number in section table'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Items to be added to thematic groupings';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Items to be added to thematic groupings';
 			
 			CREATE TABLE `__themeTypes` (
 			  `id` varchar(85) PRIMARY KEY NOT NULL,
@@ -455,12 +455,12 @@ class sprishop extends frontControllerApplication
 			  `plural` varchar(85) NOT NULL,
 			  `description` text,
 			  `enabled` ENUM('Yes','No') NOT NULL DEFAULT 'Yes' COMMENT 'Enabled?'
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Available themes';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available themes';
 			
 			CREATE TABLE `__variationHeadings` (
 			  `columnName` varchar(191) PRIMARY KEY NOT NULL,
 			  `englishNameOrNull` varchar(255) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Variation headings';
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Variation headings';
 		;";
 		
 		if ($this->enableShoppingCart) {
@@ -478,7 +478,7 @@ class sprishop extends frontControllerApplication
 				  `total` int(11) NOT NULL COMMENT 'Number of items required',
 				  `maximumAvailable` int(11) NOT NULL COMMENT 'Maxmimum number of items of this type available',
 				  `orderId` int(11) DEFAULT NULL COMMENT 'Order number'
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart session information (do not edit)';
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart session information (do not edit)';
 				
 				CREATE TABLE `shoppingcartOrders` (
 				  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT COMMENT 'Order no.',
@@ -491,7 +491,7 @@ class sprishop extends frontControllerApplication
 				  `telephone` varchar(255) DEFAULT NULL COMMENT 'Telephone',
 				  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				  `status` enum('unfinalised','finalised','shipped','returned','lost','ignore') NOT NULL COMMENT 'Status of order'
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart inquiry form';
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Shopping cart inquiry form';
 			;";
 		}
   		
