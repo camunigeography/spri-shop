@@ -11,7 +11,6 @@
 
 
 # Online shop application
-require_once ('frontControllerApplication.php');
 class sprishop extends frontControllerApplication
 {
 	# Function to assign defaults additional to the general application defaults
@@ -520,9 +519,6 @@ class sprishop extends frontControllerApplication
 	# Additional processing
 	public function main ()
 	{
-		# Load required libraries
-		require_once ('timedate.php');
-		
 		# Get the product types and section data
 		$this->sections = $this->getSections ();
 		$this->productTypes = $this->getProductTypes ();
@@ -1437,9 +1433,6 @@ class sprishop extends frontControllerApplication
 	# Function to create HTML for the image
 	private function imageHtml ($photographFilename, $title, $type, &$imagePath = false)
 	{
-		# Load required library
-		require_once ('image.php');
-		
 		# Define the default image HTML
 		$imageHtml = "<span class=\"noimage\">Sorry, no image available at present.</span>";
 		
@@ -1690,7 +1683,6 @@ class sprishop extends frontControllerApplication
 		if ($csvExport) {
 			ob_clean ();
 			//flush ();
-			require_once ('csv.php');
 			csv::serve ($data, __FUNCTION__, $timestamp = true, $headerLabels);
 			die;
 		}

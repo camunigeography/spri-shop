@@ -1,0 +1,18 @@
+{
+    "name": "camunigeography/spri-shop",
+    "description": "Simple shop interface",
+    "type": "project",
+    "license": "GPL-3.0-only",
+    "minimum-stability": "stable",
+    "require": {
+        "libpurecontent/frontcontrollerapplication": "^1.13",
+        "libpurecontent/timedate": "^1.3",
+        "libpurecontent/image": "^1.4",
+        "libpurecontent/csv": "^1.5",
+        "libpurecontent/application": "^1.9",
+        "smarty/smarty": "^4.4"
+    },
+    "autoload": {
+        "files": ["sprishop.php"]
+    }
+}
