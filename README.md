@@ -42,5 +42,5 @@ Martin Lucas-Smith, Scott Polar Research Institute, Department of Geography, Uni
 License
 -------
 
-GPL2.
+GPL3.
 
