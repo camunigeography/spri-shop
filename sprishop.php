@@ -1272,7 +1272,7 @@ class sprishop extends frontControllerApplication
 		$html .= "\n\t\t" . application::formatTextBlock (application::makeClickableLinks ((($full && $item['descriptionLong']) ? (is_array ($item['descriptionLong']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['descriptionLong']) : (is_array ($item['description']) ? '<em>Descriptions for each variation of this item below.</em>' : $item['description'])), false, false, $target = false), $paragraphClass = 'description');
 		$html .= $attributesHtml;
 		if (isSet ($item['publisherCompiled']) && ($item['publisherCompiled'])) {$html .= "\n\t\t<p class=\"publisher\">Published: " . (is_array ($item['publisherCompiled']) ? 'See options below' : "{$item['publisherCompiled']}") . '</p>';}
-		$html .= "\n\t\t<p class=\"price\">Price: " . (is_array ($item['pricePerUnit']) ? 'See options below' : "{$item['pricePerUnitFormatted']}") . '</p>';
+		$html .= "\n\t\t<p class=\"price\">Price: &pound;" . (is_array ($item['pricePerUnit']) ? 'See options below' : "{$item['pricePerUnitFormatted']}") . '</p>';
 		$html .= "\n\t\t<p class=\"stock\">Availability: " . (is_array ($item['stockAvailable']) ? 'See options below' : $item['stockAvailable']) . '</p>';
 		if ($multiselectComponents) {$html .= "\n<p>Variations available:<br />" . application::htmlTable ($multiselectComponents, $labels, 'lines small compressed', false, true, true) . '</p>';}
 		# Add a button to the longer description if there is one and not in single-item mode
