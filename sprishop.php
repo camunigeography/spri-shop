@@ -13,6 +13,17 @@
 # Online shop application
 class sprishop extends frontControllerApplication
 {
+	# Class properties
+	private $enableShoppingCart;
+	private $sections;
+	private $productTypes;
+	private $arguments;
+	private $subtypes;
+	private $howToOrderText;
+	private $shoppingCart;
+	
+	
+	
 	# Function to assign defaults additional to the general application defaults
 	public function defaults ()
 	{
