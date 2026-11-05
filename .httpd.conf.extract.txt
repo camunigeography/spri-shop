@@ -3,7 +3,7 @@
 #   Example usage in httpd.conf:
 #   
 #   # Assessments
-#   Include /path/to/sprishop/.httpd.conf.extract.txt
+#   Include /path/to/spri-shop/.httpd.conf.extract.txt
 #   Use MacroSpriShop "/shop" "SPRI shop"
 
 
@@ -11,12 +11,6 @@
 	
 	# Front controller application support
 	Use MacroFrontControllerApplication "$baseUrl/" "$description"
-	
-	# Shop application
-	<Location $baseUrl/>
-		php_admin_value output_buffering 32768
-		AAAlwaysDecode On
-	</Location>
 	
 	# Editing
 	Use MacroSinenomineEmbeddedWholeDb "$baseUrl" "/data" "editing"
