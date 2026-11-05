@@ -1539,7 +1539,7 @@ class sprishop extends frontControllerApplication
 		);
 		
 		# Hand off to the default editor, which will echo the HTML
-		parent::editing ($attributes, $deny, $sinenomineExtraSettings);
+		echo parent::editing ($attributes, $deny, $sinenomineExtraSettings);
 	}
 	
 	
@@ -1575,7 +1575,7 @@ class sprishop extends frontControllerApplication
 		);
 		
 		# Run the main settings system with the overriden attributes
-		return parent::settings ($dataBindingSettingsOverrides);
+		echo parent::settings ($dataBindingSettingsOverrides);
 	}
 	
 	
